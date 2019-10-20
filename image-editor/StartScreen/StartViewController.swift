@@ -39,6 +39,10 @@ class StartViewControllerImpl: UIViewController {
         return label
     }
 
+    private func configureNavBar() {
+        self.navigationItem.title = "Start Screen"
+    }
+
     private func setupStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal

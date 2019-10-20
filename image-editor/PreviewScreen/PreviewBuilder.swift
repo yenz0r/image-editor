@@ -6,4 +6,27 @@
 //  Copyright © 2019 yenz0redd. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol PreviewBuilder {
+    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewCoordinator
+}
+
+class PreviewBuilderImpl: PreviewBuilder {
+    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewCoordinator {
+        let view = PreviewViewImpl()
+        let coordinator = PreviewCoordinatorImpl(
+            view: view,
+            presentingVC: presentingVC
+        )
+        let model = PreviewModelImpl()
+        let presenter = PreviewPresenterImpl(
+            model: model,
+            view: view,
+            coordinator: coordinator,
+            image: image
+        )
+        view.presenter = presenter
+        return coordinator
+    }
+}

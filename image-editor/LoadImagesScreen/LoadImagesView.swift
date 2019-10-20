@@ -10,6 +10,8 @@ import UIKit
 
 protocol LoadImagesView {
     func reloadData()
+    func showLoadingView()
+    func hideLoadingView()
 }
 
 class LoadImagesViewImpl: UIViewController {
@@ -17,23 +19,47 @@ class LoadImagesViewImpl: UIViewController {
     private var linkLoadingTextField: UITextField!
     private var linkLoadingButton: UIButton!
 
+    private var loadingView: UIView!
+    private var loadingIndicator: UIActivityIndicatorView!
+
     private var collectionView: UICollectionView!
 
     var presenter: LoadImagesPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.presenter.viewDidLoad()
-
+        self.configureNavBar()
         self.linkLoadingContainer = self.setupLinkContainer()
         self.linkLoadingTextField = self.setuplinkTextField()
         self.linkLoadingButton = self.setupLinkButton()
-
         self.collectionView = self.setupColletionView()
+        self.loadingView = self.setupLoadingView()
+        self.loadingIndicator = self.setupIndicatorView()
+        self.presenter.viewDidLoad()
     }
 
-    func reloadData() {
-        self.collectionView.reloadData()
+    private func configureNavBar() {
+        self.navigationItem.title = "Load Image"
+    }
+
+    private func setupLoadingView() -> UIView {
+        let view = UIView()
+        view.backgroundColor = UIColor.black.withAlphaComponent(0.8)
+        self.view.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalTo(self.view.safeAreaLayoutGuide)
+        }
+        return view
+    }
+
+    private func setupIndicatorView() -> UIActivityIndicatorView {
+        let indicator = UIActivityIndicatorView(style: .large)
+        self.loadingView.addSubview(indicator)
+        indicator.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+        }
+        indicator.tintColor = .green
+        return indicator
     }
 
     private func setupLinkContainer() -> UIView {
@@ -41,7 +67,6 @@ class LoadImagesViewImpl: UIViewController {
         self.view.addSubview(container)
         container.snp.makeConstraints { make in
             make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(40.0)
         }
         container.backgroundColor = .orange
         return container
@@ -50,6 +75,9 @@ class LoadImagesViewImpl: UIViewController {
     private func setuplinkTextField() -> UITextField {
         let textField = UITextField()
         textField.placeholder = "Paste your image ling.."
+        textField.layer.cornerRadius = 4.0
+        textField.layer.borderColor = UIColor.black.cgColor
+        textField.layer.borderWidth = 2.0
         self.linkLoadingContainer.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(30.0)
@@ -63,6 +91,7 @@ class LoadImagesViewImpl: UIViewController {
         self.linkLoadingContainer.addSubview(button)
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-10.0)
             make.width.equalTo(40.0)
             make.height.equalTo(20.0)
             make.top.equalTo(self.linkLoadingTextField.snp.bottom).offset(10.0)
@@ -126,5 +155,21 @@ extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+}
+
+extension LoadImagesViewImpl: LoadImagesView {
+    func showLoadingView() {
+        self.loadingView.isHidden = false
+        self.loadingIndicator.startAnimating()
+    }
+
+    func hideLoadingView() {
+        self.loadingView.isHidden = true
+        self.loadingIndicator.stopAnimating()
+    }
+
+    func reloadData() {
+        self.collectionView.reloadData()
     }
 }

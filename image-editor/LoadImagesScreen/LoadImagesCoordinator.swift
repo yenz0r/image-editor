@@ -24,12 +24,12 @@ class LoadImagesCoordinatorImpl: LoadImagesCoordinator {
     }
 
     func showPreviewScreen(with image: UIImage?) {
-        print("preview")
+        let builder = PreviewBuilderImpl()
+        let coordinator = builder.build(with: image, presentingVC: self.view)
+        coordinator.start()
     }
 
     func start() {
-        let navController = UINavigationController(rootViewController: self.view)
-        navController.modalPresentationStyle = .fullScreen
-        presentingVC.present(navController, animated: true, completion: nil)
+        self.presentingVC.navigationController?.pushViewController(self.view, animated: true)
     }
 }

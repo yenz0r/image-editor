@@ -6,4 +6,28 @@
 //  Copyright © 2019 yenz0redd. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol PreviewCoordinator {
+    func start()
+    func showEditScreen(with image: UIImage?)
+}
+
+class PreviewCoordinatorImpl: PreviewCoordinator {
+    let view: PreviewViewImpl
+    let presentingVC: UIViewController
+
+    init(view: PreviewViewImpl,
+         presentingVC: UIViewController) {
+        self.view = view
+        self.presentingVC = presentingVC
+    }
+
+    func showEditScreen(with image: UIImage?) {
+        print("edit")
+    }
+
+    func start() {
+        self.presentingVC.navigationController?.pushViewController(view, animated: true)
+    }
+}

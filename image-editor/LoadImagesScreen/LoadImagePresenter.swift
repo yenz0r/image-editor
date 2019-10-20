@@ -33,9 +33,11 @@ class LoadImagesPresenterImpl: LoadImagesPresenter {
     }
 
     func updateImages() {
+        self.view.showLoadingView()
         self.model.getImages { images in
             self.images = images
             self.view.reloadData()
+            self.view.hideLoadingView()
         }
     }
 

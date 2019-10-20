@@ -28,7 +28,8 @@ class StartCoordinatorImpl: StartCoordinator {
     var onTerminate: (() -> Void)?
 
     func start() {
-        self.window.rootViewController = self.view
+        let navController = UINavigationController(rootViewController: self.view)
+        self.window.rootViewController = navController
         self.window.makeKeyAndVisible()
     }
 
