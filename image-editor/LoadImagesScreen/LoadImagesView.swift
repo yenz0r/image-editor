@@ -1,0 +1,130 @@
+//
+//  LoadImagesView.swift
+//  image-editor
+//
+//  Created by yenz0redd on 20.10.2019.
+//  Copyright © 2019 yenz0redd. All rights reserved.
+//
+
+import UIKit
+
+protocol LoadImagesView {
+    func reloadData()
+}
+
+class LoadImagesViewImpl: UIViewController {
+    private var linkLoadingContainer: UIView!
+    private var linkLoadingTextField: UITextField!
+    private var linkLoadingButton: UIButton!
+
+    private var collectionView: UICollectionView!
+
+    var presenter: LoadImagesPresenter!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.presenter.viewDidLoad()
+
+        self.linkLoadingContainer = self.setupLinkContainer()
+        self.linkLoadingTextField = self.setuplinkTextField()
+        self.linkLoadingButton = self.setupLinkButton()
+
+        self.collectionView = self.setupColletionView()
+    }
+
+    func reloadData() {
+        self.collectionView.reloadData()
+    }
+
+    private func setupLinkContainer() -> UIView {
+        let container = UIView()
+        self.view.addSubview(container)
+        container.snp.makeConstraints { make in
+            make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(40.0)
+        }
+        container.backgroundColor = .orange
+        return container
+    }
+
+    private func setuplinkTextField() -> UITextField {
+        let textField = UITextField()
+        textField.placeholder = "Paste your image ling.."
+        self.linkLoadingContainer.addSubview(textField)
+        textField.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(30.0)
+            make.top.equalToSuperview().offset(10.0)
+        }
+        return textField
+    }
+
+    private func setupLinkButton() -> UIButton {
+        let button = UIButton(type: .system)
+        self.linkLoadingContainer.addSubview(button)
+        button.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.width.equalTo(40.0)
+            make.height.equalTo(20.0)
+            make.top.equalTo(self.linkLoadingTextField.snp.bottom).offset(10.0)
+        }
+        button.setTitle("Load", for: .normal)
+        button.backgroundColor = .green
+        button.addTarget(self, action: #selector(handleLinkLoadButtonTap), for: .touchUpInside)
+        return button
+    }
+
+    @objc private func handleLinkLoadButtonTap() {
+        self.presenter.handleLoadButtonTap(with: self.linkLoadingTextField.text)
+    }
+
+    private func setupColletionView() -> UICollectionView {
+        let collectionFlowLayout = UICollectionViewFlowLayout()
+        collectionFlowLayout.scrollDirection = .horizontal
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
+
+        collectionView.register(LoadImagesCell.self, forCellWithReuseIdentifier: "imagesCell")
+
+        collectionView.delegate = self
+        collectionView.dataSource = self
+
+        self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.top.equalTo(self.linkLoadingContainer.snp.bottom)
+            make.leading.trailing.bottom.equalToSuperview()
+        }
+        collectionView.backgroundColor = .blue
+        return collectionView
+    }
+}
+
+extension LoadImagesViewImpl: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.presenter.images.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imagesCell", for: indexPath) as! LoadImagesCell
+        cell.image = self.presenter.images[indexPath.row]
+        return cell
+    }
+}
+
+extension LoadImagesViewImpl: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.presenter.handleCellTap(at: indexPath)
+    }
+}
+
+extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.view.frame.width / 3, height: self.view.frame.width / 3)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
+    }
+}
