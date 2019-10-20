@@ -1,6 +1,0 @@
-framework module Pods_image_editor {
-  umbrella header "Pods-image-editor-umbrella.h"
-
-  export *
-  module * { export * }
-}
