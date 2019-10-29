@@ -8,14 +8,18 @@
 
 import UIKit
 
-protocol LoadImagesCoordinator {
+protocol LoadImagesRouter {
     func start()
     func showPreviewScreen(with image: UIImage?)
+    func stop(completion: @escaping () -> ())
+    func terminate()
 }
 
-class LoadImagesCoordinatorImpl: LoadImagesCoordinator {
-    let view: LoadImagesViewImpl
-    let presentingVC: UIViewController
+class LoadImagesCoordinator: LoadImagesRouter {
+    private let view: LoadImagesViewImpl
+    private let presentingVC: UIViewController
+
+    var onTerminate: (() -> Void)?
 
     init(view: LoadImagesViewImpl,
          presentingVC: UIViewController) {
@@ -31,5 +35,13 @@ class LoadImagesCoordinatorImpl: LoadImagesCoordinator {
 
     func start() {
         self.presentingVC.navigationController?.pushViewController(self.view, animated: true)
+    }
+
+    func stop(completion: @escaping () -> ()) {
+        self.presentingVC.dismiss(animated: true, completion: completion)
+    }
+
+    func terminate() {
+        self.onTerminate?()
     }
 }

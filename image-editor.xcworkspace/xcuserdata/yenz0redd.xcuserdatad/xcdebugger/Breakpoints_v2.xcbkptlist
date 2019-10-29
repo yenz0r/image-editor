@@ -3,4 +3,69 @@
    uuid = "72C9B8D0-784D-48FC-B4BA-E71B4EA2EFE8"
    type = "0"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "04D2E559-1D60-4CEB-B279-8BDCBDD2B2CF"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "image-editor/PreviewScreen/PreviewView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
+            landmarkName = "sliderStartValueUpdate(slider:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "04D2E559-1D60-4CEB-B279-8BDCBDD2B2CF - 69c83cd2386afac4"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "image_editor.PreviewViewImpl.(sliderStartValueUpdate in _9108C4D7A6A757EAAC1E3495E391084F)(slider: __C.UISlider) -&gt; ()"
+                  moduleName = "image-editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yenz0redd/git/image-editor/image-editor/PreviewScreen/PreviewView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "117">
+               </Location>
+               <Location
+                  uuid = "04D2E559-1D60-4CEB-B279-8BDCBDD2B2CF - 69c83cd2386afac4"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "image_editor.PreviewViewImpl.(sliderStartValueUpdate in _9108C4D7A6A757EAAC1E3495E391084F)(slider: __C.UISlider) -&gt; ()"
+                  moduleName = "image-editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yenz0redd/git/image-editor/image-editor/PreviewScreen/PreviewView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "201">
+               </Location>
+               <Location
+                  uuid = "04D2E559-1D60-4CEB-B279-8BDCBDD2B2CF - 69c83cd2386afac4"
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "image_editor.PreviewViewImpl.(sliderStartValueUpdate in _9108C4D7A6A757EAAC1E3495E391084F)(slider: __C.UISlider) -&gt; ()"
+                  moduleName = "image-editor"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/yenz0redd/git/image-editor/image-editor/PreviewScreen/PreviewView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "242"
+                  endingLineNumber = "242"
+                  offsetFromSymbolStart = "650">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

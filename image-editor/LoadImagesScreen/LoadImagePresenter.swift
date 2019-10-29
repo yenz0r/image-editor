@@ -21,11 +21,11 @@ class LoadImagesPresenterImpl: LoadImagesPresenter {
 
     let model: LoadImagesModelImpl
     let view: LoadImagesViewImpl
-    let coordinator: LoadImagesCoordinatorImpl
+    let coordinator: LoadImagesCoordinator
 
     init(model: LoadImagesModelImpl,
          view: LoadImagesViewImpl,
-         coordinator: LoadImagesCoordinatorImpl) {
+         coordinator: LoadImagesCoordinator) {
         self.model = model
         self.view = view
         self.coordinator = coordinator

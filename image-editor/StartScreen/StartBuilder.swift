@@ -9,13 +9,13 @@
 import UIKit
 
 protocol StartBuilder {
-    func build(window: UIWindow) -> StartCoordinator
+    func build(window: UIWindow) -> StartRouter
 }
 
 class StartBuilderImpl: StartBuilder {
-    func build(window: UIWindow) -> StartCoordinator {
+    func build(window: UIWindow) -> StartRouter {
         let view = StartViewControllerImpl()
-        let coordinator = StartCoordinatorImpl(
+        let coordinator = StartCoordinator(
             window: window, view: view
         )
         let model = StartModelImpl()

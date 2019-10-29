@@ -18,26 +18,26 @@ class StartPresenterImpl: StartPresenter {
 
     private var model: StartModel!
     private var view: StartViewController!
-    private var coordinator: StartCoordinator!
+    private var router: StartRouter!
 
     init(model: StartModel,
          view: StartViewController,
-         coordinator: StartCoordinator) {
+         coordinator: StartRouter) {
         self.model = model
         self.view = view
-        self.coordinator = coordinator
+        self.router = coordinator
     }
 
     func viewDidLoad() {
         self.view.setupTitle("Choose mode")
         self.addButton(title: "0", index: 0) {
-            self.coordinator.showLoadImagesScreen()
+            self.router.showLoadImagesScreen()
         }
-        self.addButton(title: "1", index: 1) {
-            print("1")
+        self.addButton(title: "Camera", index: 1) {
+            self.router.showCameraScreen()
         }
-        self.addButton(title: "2", index: 2) {
-            print("2")
+        self.addButton(title: "Gallery", index: 2) {
+            self.router.showGallerySreen()
         }
     }
 

@@ -15,7 +15,7 @@ protocol LoadImagesBuilder {
 class LoadImagesBuilderImpl: LoadImagesBuilder {
     func build(presetingView: UIViewController) -> LoadImagesCoordinator {
         let view = LoadImagesViewImpl()
-        let coordinator = LoadImagesCoordinatorImpl(
+        let coordinator = LoadImagesCoordinator(
             view: view,
             presentingVC: presetingView
         )
