@@ -47,6 +47,14 @@ extension ColorsCoordinator: ColorsRouter {
     }
 
     func showSaveScreen(with image: UIImage?) {
-        print("save")
+        let builder = SaveBuilderImpl()
+        let coordinator = builder.build(
+            parentController: self.parentController,
+            image: image
+        )
+        coordinator.onTerminate = {
+            coordinator.stop { }
+        }
+        coordinator.start()
     }
 }

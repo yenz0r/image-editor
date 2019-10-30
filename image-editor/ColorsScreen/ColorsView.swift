@@ -26,6 +26,7 @@ final class ColorsViewImpl: UIViewController {
         self.imageView = self.setupImageView()
         self.controlsPanel = self.setupControlsPabel()
         self.stackView = self.setupStackView()
+        self.configureNavBar()
 
         self.presenter.viewDidLoad()
     }
