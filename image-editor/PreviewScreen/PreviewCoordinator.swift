@@ -24,7 +24,9 @@ class PreviewCoordinatorImpl: PreviewCoordinator {
     }
 
     func showEditScreen(with image: UIImage?) {
-        print("edit")
+        let filtersView = FiltersViewImpl()
+        filtersView.modalPresentationStyle = .fullScreen
+        self.view.navigationController?.pushViewController(filtersView, animated: true)
     }
 
     func start() {
