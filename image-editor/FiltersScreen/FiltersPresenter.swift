@@ -12,13 +12,15 @@ protocol FiltersPresenter {
     func viewDidLoad()
     func handleFilterChoose(at indexPath: IndexPath)
     var processedImages: [UIImage?] { get }
+    func handleNextButtonTap()
 }
 
 class FiltersPresenterImpl: FiltersPresenter {
     private let model: FiltersModel!
     private let view: FiltersView!
     private let router: FiltersRouter!
-    private let image: UIImage!
+    private var image: UIImage!
+    private var resultImage: UIImage!
 
     private var filteredImages = [UIImage?]()
 
@@ -53,8 +55,13 @@ class FiltersPresenterImpl: FiltersPresenter {
             self.model.applyFilter(for: self.model.filters[indexPath.row], image: self.image) { image in
                 DispatchQueue.main.async {
                     self.view.setupImage(image)
+                    self.resultImage = image
                 }
             }
         }
+    }
+
+    func handleNextButtonTap() {
+        self.router.showColorsScreen(with: self.resultImage)
     }
 }

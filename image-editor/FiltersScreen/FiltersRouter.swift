@@ -10,7 +10,7 @@ import UIKit
 
 protocol FiltersRouter {
     func start()
-    func showBorderScreen(with image: UIImage?)
+    func showColorsScreen(with image: UIImage?)
 }
 
 final class FiltersCoordinator: FiltersRouter {
@@ -23,10 +23,16 @@ final class FiltersCoordinator: FiltersRouter {
         self.presentingVC = presentingVC
     }
 
-    func showBorderScreen(with image: UIImage?) {
-        let filtersView = FiltersViewImpl()
-        filtersView.modalPresentationStyle = .fullScreen
-        self.view.navigationController?.pushViewController(filtersView, animated: true)
+    func showColorsScreen(with image: UIImage?) {
+        let builder = ColorsBuilderImpl()
+        let coordinator = builder.build(
+            parentController: self.view,
+            image: image
+        )
+        coordinator.onTerminate = {
+            coordinator.stop { }
+        }
+        coordinator.start()
     }
 
     func start() {

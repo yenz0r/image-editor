@@ -43,12 +43,12 @@ class FiltersViewImpl: UIViewController {
     }
 
     private func configureNavBar() {
-        let barItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(handleNextButtonTap))
+        let barItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped))
         self.navigationItem.rightBarButtonItem = barItem
     }
 
-    @objc private func handleNextButtonTap() {
-
+    @objc private func nextButtonTapped() {
+        self.presenter.handleNextButtonTap()
     }
 
     private func setupCollectionView() -> UICollectionView {

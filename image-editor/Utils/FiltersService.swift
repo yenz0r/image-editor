@@ -16,7 +16,7 @@ class FiltersService {
     }
 
     private(set) var filters = [
-        FilterType(name: "CISepiaTone", key: kCIInputIntensityKey),
+        FilterType(name: "CISepiaTone", key: kCIInputIntensityKey), 
         FilterType(name: "CIMotionBlur", key: kCIInputAngleKey),
         FilterType(name: "CIComicEffect", key: nil),
         FilterType(name: "CIBloom", key: kCIInputIntensityKey),
