@@ -35,6 +35,7 @@
 		B9B171F52358F8950043B9BA /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F42358F8950043B9BA /* StartViewController.swift */; };
 		B9B171F72358FBDE0043B9BA /* StartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F62358FBDE0043B9BA /* StartPresenter.swift */; };
 		B9B171F92358FBE50043B9BA /* StartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F82358FBE50043B9BA /* StartModel.swift */; };
+		FE2F136E2369802F00C4C27D /* FiltersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2F136D2369802F00C4C27D /* FiltersService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		B9B171F62358FBDE0043B9BA /* StartPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPresenter.swift; sourceTree = "<group>"; };
 		B9B171F82358FBE50043B9BA /* StartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartModel.swift; sourceTree = "<group>"; };
 		BD7732CD85075B25F8BFBDFD /* Pods-image-editor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-image-editor.debug.xcconfig"; path = "Target Support Files/Pods-image-editor/Pods-image-editor.debug.xcconfig"; sourceTree = "<group>"; };
+		FE2F136D2369802F00C4C27D /* FiltersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				B964FAE4235BB5E100694F02 /* LoadImagesScreen */,
 				B9642CB9235CD48200675954 /* PreviewScreen */,
 				B9A2D8782368E96F00269ECB /* FiltersScreen */,
+				FE2F136F236989BC00C4C27D /* Utils */,
 				B9B171E62358F86C0043B9BA /* Assets.xcassets */,
 				B9B171EB2358F86C0043B9BA /* LaunchScreen.storyboard */,
 				B9B171EE2358F86C0043B9BA /* Info.plist */,
@@ -192,6 +195,14 @@
 				B964FAD7235BAF3A00694F02 /* StartRouter.swift */,
 			);
 			path = StartScreen;
+			sourceTree = "<group>";
+		};
+		FE2F136F236989BC00C4C27D /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				FE2F136D2369802F00C4C27D /* FiltersService.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,6 +324,7 @@
 				B9A2D8772368E95D00269ECB /* FiltersModel.swift in Sources */,
 				B964FADA235BB58D00694F02 /* LoadImagesView.swift in Sources */,
 				B9642CB6235CD46300675954 /* PreviewBuilder.swift in Sources */,
+				FE2F136E2369802F00C4C27D /* FiltersService.swift in Sources */,
 				B9B171E12358F86B0043B9BA /* AppDelegate.swift in Sources */,
 				B964FADE235BB5AF00694F02 /* LoadImagePresenter.swift in Sources */,
 				B9A2D8712368E93E00269ECB /* FiltersRouter.swift in Sources */,

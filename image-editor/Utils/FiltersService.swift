@@ -10,32 +10,54 @@ import UIKit
 import CoreImage
 
 class FiltersService {
-    private(set) var filters = ["CISepiaTone"]
-    private let emptyImage = UIImage(named: "asd")
-    private let inputImage: UIImage?
-
-    init(inputImage: UIImage?) {
-        self.inputImage = inputImage
+    struct FilterType {
+        let name: String
+        let key: String?
     }
 
-    func applyFilter(at index: Int) -> UIImage? {
+    private(set) var filters = [
+        FilterType(name: "CISepiaTone", key: kCIInputIntensityKey),
+        FilterType(name: "CIMotionBlur", key: kCIInputAngleKey),
+        FilterType(name: "CIComicEffect", key: nil),
+        FilterType(name: "CIBloom", key: kCIInputIntensityKey),
+        FilterType(name: "CIColorInvert", key: nil),
+        FilterType(name: "CIColorPosterize", key: "inputLevels"),
+        FilterType(name: "CIPhotoEffectNoir", key: nil),
+        FilterType(name: "CIPhotoEffectProcess", key: nil),
+        FilterType(name: "CIPhotoEffectTonal", key: nil),
+        FilterType(name: "CIPhotoEffectTransfer", key: nil)
+    ]
+
+    private let emptyImage = UIImage(named: "empty-image")
+
+    func applyFilter(for name: String, image: UIImage?) -> UIImage? {
         let context = CIContext(options: nil)
 
-        guard let startImage = self.inputImage, let ciImage = CIImage(image: startImage)  else {
+        guard let filter = self.filterForName(name) else {
             return self.emptyImage
         }
 
-        guard index < self.filters.count, let currentFilter = CIFilter(name: self.filters[index]) else {
+        guard let startImage = image, let ciImage = CIImage(image: startImage)  else {
+            return self.emptyImage
+        }
+
+        guard let currentFilter = CIFilter(name: filter.name) else {
             return self.emptyImage
         }
 
         currentFilter.setValue(ciImage, forKey: kCIInputImageKey)
-        currentFilter.setValue(0.5, forKey: kCIInputIntensityKey)
+        if let key = filter.key {
+            currentFilter.setValue(0.5, forKey: key)
+        }
 
         guard let output = currentFilter.outputImage, let cgimg = context.createCGImage(output, from: output.extent) else {
             return self.emptyImage
         }
 
         return UIImage(cgImage: cgimg)
+    }
+
+    private func filterForName(_ name: String) -> FilterType? {
+        return self.filters.first(where: { $0.name == name } )
     }
 }

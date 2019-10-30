@@ -6,4 +6,37 @@
 //  Copyright © 2019 yenz0redd. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+protocol FiltersModel {
+    var filters: [String] { get }
+    func applyFilter(for name: String, image: UIImage?, completion: ((_ image: UIImage?) -> Void)?)
+    func applyAllFilters(for image: UIImage?, completion: ((_ images: [UIImage?]) -> Void)?)
+}
+
+class FiltersModelImpl: FiltersModel {
+    private let filtersService: FiltersService
+
+    var filters: [String] {
+        var result = [String]()
+        self.filtersService.filters.forEach { result.append($0.name) }
+        return result
+    }
+
+    init() {
+        self.filtersService = FiltersService()
+    }
+
+    func applyFilter(for name: String, image: UIImage?, completion: ((_ image: UIImage?) -> Void)?) {
+        completion?(self.filtersService.applyFilter(for: name, image: image))
+    }
+
+    func applyAllFilters(for image: UIImage?, completion: ((_ images: [UIImage?]) -> Void)?) {
+        var result = [UIImage?]()
+        for name in filters {
+            let filteredImage = self.filtersService.applyFilter(for: name, image: image)
+            result.append(filteredImage)
+        }
+        completion?(result)
+    }
+}

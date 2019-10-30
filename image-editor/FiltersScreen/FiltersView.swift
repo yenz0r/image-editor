@@ -10,11 +10,16 @@ import UIKit
 
 protocol FiltersView {
     func reloadData()
+    func setupImage(_ image: UIImage?)
 }
 
 class FiltersViewImpl: UIViewController {
-    private var imageView: UIView!
+    private var imageView: UIImageView!
     private var collectionView: UICollectionView!
+
+    private let collectionViewHeight = 70.0
+
+    var presenter: FiltersPresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +27,8 @@ class FiltersViewImpl: UIViewController {
         self.imageView = self.setupImageView()
         self.collectionView = self.setupCollectionView()
         self.configureNavBar()
+
+        self.presenter.viewDidLoad()
     }
 
     private func setupImageView() -> UIImageView {
@@ -51,6 +58,14 @@ class FiltersViewImpl: UIViewController {
         collectionView.register(FiltersCell.self, forCellWithReuseIdentifier: "filtersCell")
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.backgroundColor = .white
+
+        self.view.addSubview(collectionView)
+        collectionView.snp.makeConstraints { make in
+            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(self.collectionViewHeight)
+        }
+
         return collectionView
     }
 }
@@ -59,25 +74,32 @@ extension FiltersViewImpl: FiltersView {
     func reloadData() {
         self.collectionView.reloadData()
     }
+
+    func setupImage(_ image: UIImage?) {
+        self.imageView.image = image
+    }
 }
 
 extension FiltersViewImpl: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        //return self.presenter.filters.count
-        return 0
+        return self.presenter.processedImages.count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "filtersCell", for: indexPath) as! FiltersCell
-        //cell.image = self.presenter.filteredImages[indexPath.row]
+        cell.image =  self.presenter.processedImages[indexPath.row]
         return cell
     }
 }
 
 extension FiltersViewImpl: UICollectionViewDelegate {
-
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.presenter.handleFilterChoose(at: indexPath)
+    }
 }
 
 extension FiltersViewImpl: UICollectionViewDelegateFlowLayout {
-
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: self.collectionViewHeight, height: self.collectionViewHeight)
+    }
 }
