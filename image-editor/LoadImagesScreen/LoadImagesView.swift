@@ -64,9 +64,11 @@ class LoadImagesViewImpl: UIViewController {
 
     private func setupLinkContainer() -> UIView {
         let container = UIView()
+        container.layer.cornerRadius = 30.0
+        container.clipsToBounds = true
         self.view.addSubview(container)
         container.snp.makeConstraints { make in
-            make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide)
+            make.leading.trailing.top.equalTo(self.view.safeAreaLayoutGuide).inset(15.0)
         }
         container.backgroundColor = .orange
         return container
@@ -74,10 +76,8 @@ class LoadImagesViewImpl: UIViewController {
 
     private func setuplinkTextField() -> UITextField {
         let textField = UITextField()
-        textField.placeholder = "Paste your image ling.."
-        textField.layer.cornerRadius = 4.0
-        textField.layer.borderColor = UIColor.black.cgColor
-        textField.layer.borderWidth = 2.0
+        textField.placeholder = "Paste your image link.."
+        textField.textAlignment = .center
         self.linkLoadingContainer.addSubview(textField)
         textField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(30.0)
@@ -90,13 +90,12 @@ class LoadImagesViewImpl: UIViewController {
         let button = UIButton(type: .system)
         self.linkLoadingContainer.addSubview(button)
         button.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.bottom.equalToSuperview().offset(-10.0)
-            make.width.equalTo(40.0)
-            make.height.equalTo(20.0)
+            make.leading.trailing.equalToSuperview()
+            make.bottom.equalToSuperview()
             make.top.equalTo(self.linkLoadingTextField.snp.bottom).offset(10.0)
         }
         button.setTitle("Load", for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .green
         button.addTarget(self, action: #selector(handleLinkLoadButtonTap), for: .touchUpInside)
         return button
