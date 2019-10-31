@@ -42,8 +42,9 @@ final class ColorsViewImpl: UIViewController {
             action: #selector(nextButtonTapped)
         )
         self.navigationItem.rightBarButtonItem = barItem
+        self.navigationItem.title = "Colors Screen"
     }
-
+    
     @objc private func nextButtonTapped() {
         self.presenter.handleNextButtonTap()
     }

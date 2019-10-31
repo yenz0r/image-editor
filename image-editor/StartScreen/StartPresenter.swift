@@ -6,7 +6,7 @@
 //  Copyright © 2019 yenz0redd. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 protocol StartPresenter {
     func viewDidLoad()
@@ -29,14 +29,14 @@ class StartPresenterImpl: StartPresenter {
     }
 
     func viewDidLoad() {
-        self.view.setupTitle("Choose mode")
-        self.addButton(title: "0", index: 0) {
+        self.view.setupTitle("Image Editor :D")
+        self.addButton(title: "Network", index: 0, color: .orange) {
             self.router.showLoadImagesScreen()
         }
-        self.addButton(title: "Camera", index: 1) {
+        self.addButton(title: "Camera", index: 1, color: .green) {
             self.router.showCameraScreen()
         }
-        self.addButton(title: "Gallery", index: 2) {
+        self.addButton(title: "Gallery", index: 2, color: .blue) {
             self.router.showGallerySreen()
         }
     }
@@ -48,8 +48,8 @@ class StartPresenterImpl: StartPresenter {
         action()
     }
 
-    private func addButton(title: String, index: Int, action: ButtonAction?) {
-        self.view.addButton(title: title, index: index, action: action)
+    private func addButton(title: String, index: Int, color: UIColor, action: ButtonAction?) {
+        self.view.addButton(title: title, index: index, color: color, action: action)
         self.model.addButton(title: title, action: action)
     }
 }

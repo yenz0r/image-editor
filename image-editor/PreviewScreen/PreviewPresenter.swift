@@ -43,7 +43,7 @@ class PreviewPresenterImpl: PreviewPresenter {
     }
 
     func viewDidLoad() {
-        self.addButton(title: "edit", index: 0) {
+        self.addButton(title: "Filters", index: 0) {
             self.coordinator.showEditScreen(with: self.image)
         }
         self.setupImage(self.image)

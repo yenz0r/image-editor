@@ -108,7 +108,7 @@ class LoadImagesViewImpl: UIViewController {
 
     private func setupColletionView() -> UICollectionView {
         let collectionFlowLayout = UICollectionViewFlowLayout()
-        collectionFlowLayout.scrollDirection = .horizontal
+        collectionFlowLayout.scrollDirection = .vertical
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
 
         collectionView.register(LoadImagesCell.self, forCellWithReuseIdentifier: "imagesCell")
@@ -121,7 +121,7 @@ class LoadImagesViewImpl: UIViewController {
             make.top.equalTo(self.linkLoadingContainer.snp.bottom)
             make.leading.trailing.bottom.equalToSuperview()
         }
-        collectionView.backgroundColor = .blue
+        collectionView.backgroundColor = .black
         return collectionView
     }
 }
@@ -150,6 +150,10 @@ extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0.0
     }
 

@@ -72,6 +72,9 @@ extension ColorsPresenterImpl: ColorsPresenter {
     }
 
     func handleNextButtonTap() {
+        if self.processedImage == nil {
+            self.processedImage = self.image
+        }
         self.router.showSaveScreen(startImage: self.image, resultImage: self.processedImage)
     }
 }

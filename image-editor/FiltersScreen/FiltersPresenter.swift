@@ -44,7 +44,7 @@ class FiltersPresenterImpl: FiltersPresenter {
         DispatchQueue.global(qos: .userInteractive).async {
             self.model.applyAllFilters(for: self.image) { images in
                 self.filteredImages = images
-                DispatchQueue.main.async {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                     self.view.reloadData()
                     self.view.stopAnimation()
                 }

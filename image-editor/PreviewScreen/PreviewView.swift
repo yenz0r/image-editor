@@ -77,12 +77,14 @@ class PreviewViewImpl: UIViewController {
     private func setupScaleLabel() -> UILabel {
         let label = UILabel()
         label.textAlignment = .center
+        label.textColor = .black
         return label
     }
 
     private func setupRotateLabel() -> UILabel {
         let label = UILabel()
         label.textAlignment = .center
+        label.textColor = .black
         return label
     }
 
@@ -104,7 +106,7 @@ class PreviewViewImpl: UIViewController {
         button.setTitle("Rotate", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.addTarget(self, action: #selector(handleRotateButtonTap), for: .touchUpInside)
-        button.backgroundColor = .green
+        button.backgroundColor = .orange
         return button
     }
 
@@ -229,9 +231,6 @@ class PreviewViewImpl: UIViewController {
         slider.maximumValue = 1
         slider.value = 0
         slider.addTarget(self, action: #selector(rotateSliderValueChanges(_:)), for: .valueChanged)
-        slider.addTarget(self, action: #selector(sliderStartValueUpdate(slider:)), for: .touchDown)
-        slider.addTarget(self, action: #selector(sliderStartValueUpdate(slider:)), for: .touchCancel)
-        slider.tag = 0
         return slider
     }
 
@@ -241,21 +240,7 @@ class PreviewViewImpl: UIViewController {
         slider.maximumValue = 2
         slider.value = 1
         slider.addTarget(self, action: #selector(scaleSliderValueChanged), for: .valueChanged)
-        slider.addTarget(self, action: #selector(sliderStartValueUpdate(slider:)), for: .touchDown)
-        slider.addTarget(self, action: #selector(sliderStartValueUpdate(slider:)), for: .touchCancel)
-        slider.tag = 1
         return slider
-    }
-
-    @objc private func sliderStartValueUpdate(slider: UISlider) {
-//        switch slider.tag {
-//        case 0:
-//            self.rotateStartTransform = self.imageView.transform
-//        case 1:
-//            self.scaleStartTransform = self.imageView.transform
-//        default:
-//            print("incorrect tag")
-//        }
     }
 
     @objc private func scaleSliderValueChanged(_ sender: UISlider) {
@@ -293,8 +278,8 @@ class PreviewViewImpl: UIViewController {
 
         self.view.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(40.0)
-            make.height.equalTo(30)
+            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(70)
             make.bottom.equalTo(self.view.safeAreaLayoutGuide)
         }
         return stackView
@@ -310,11 +295,16 @@ extension PreviewViewImpl: PreviewView {
                 self.scaleContainerView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
             }
         } else {
-            self.scaleContainerView.isHidden = true
-            UIView.animate(withDuration: 1.0) {
-                self.controlPanel.transform = CGAffineTransform.identity
-                self.scaleContainerView.transform = CGAffineTransform.identity
-            }
+            UIView.animate(
+                withDuration: 1.0,
+                animations: {
+                    self.controlPanel.transform = CGAffineTransform.identity
+                    self.scaleContainerView.transform = CGAffineTransform.identity
+                },
+                completion: { _ in
+                    self.scaleContainerView.isHidden = true
+                }
+            )
         }
     }
 
@@ -326,11 +316,16 @@ extension PreviewViewImpl: PreviewView {
                 self.rotateContainerView.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
             }
         } else {
-            self.rotateContainerView.isHidden = true
-            UIView.animate(withDuration: 1.0) {
-                self.controlPanel.transform = CGAffineTransform.identity
-                self.rotateContainerView.transform = CGAffineTransform.identity
-            }
+            UIView.animate(
+                withDuration: 1.0,
+                animations: {
+                    self.controlPanel.transform = CGAffineTransform.identity
+                    self.rotateContainerView.transform = CGAffineTransform.identity
+                },
+                completion: { _ in
+                    self.rotateContainerView.isHidden = true
+                }
+            )
         }
     }
 
@@ -342,6 +337,7 @@ extension PreviewViewImpl: PreviewView {
         let button = UIButton(type: .system)
         button.backgroundColor = .green
         button.setTitle(title, for: .normal)
+        button.setTitleColor(.white, for: .normal)
         button.tag = index
         button.addTarget(self, action: #selector(handleButtonTap), for: .touchUpInside)
         self.stackView.addArrangedSubview(button)

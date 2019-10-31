@@ -19,16 +19,19 @@ class SaveViewImpl: UIViewController {
     private var saveButton: UIButton!
     private var exitButton: UIButton!
     private var stackView: UIStackView!
+    private var stackContainerView: UIView!
 
     var presenter: SavePresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavBar()
         self.view.backgroundColor = .black
 
         self.scrollView = self.setupScrollView()
         self.scrollContentView = self.setupScrollContentView()
-        self.stackView = setupStackVeiw()
+        self.stackContainerView = self.setupStackContainerView()
+        self.stackView = self.setupStackVeiw()
         self.saveButton = self.setupSaveButton()
         self.exitButton = self.setupExitButton()
 
@@ -39,6 +42,10 @@ class SaveViewImpl: UIViewController {
         super.viewDidAppear(animated)
 
         self.presenter.viewDidAppear()
+    }
+
+    private func configureNavBar() {
+        self.navigationItem.title = "Save Screen"
     }
 
     private func setupScrollContentView() -> UIView {
@@ -61,16 +68,27 @@ class SaveViewImpl: UIViewController {
         return scrollView
     }
 
+    private func setupStackContainerView() -> UIView {
+        let view = UIView()
+        view.layer.cornerRadius = 30.0
+        view.clipsToBounds = true
+        self.view.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20.0)
+            make.top.equalTo(self.scrollView.snp.bottom).offset(50.0)
+        }
+        return view
+    }
+
     private func setupStackVeiw() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 
-        self.view.addSubview(stackView)
+        self.stackContainerView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.scrollView.snp.bottom)
+            make.edges.equalToSuperview()
         }
 
         return stackView

@@ -25,10 +25,10 @@ class FiltersViewImpl: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavBar()
 
         self.imageView = self.setupImageView()
         self.collectionView = self.setupCollectionView()
-        self.configureNavBar()
 
         self.presenter.viewDidLoad()
     }
@@ -47,6 +47,7 @@ class FiltersViewImpl: UIViewController {
     private func configureNavBar() {
         let barItem = UIBarButtonItem(title: "Next", style: .plain, target: self, action: #selector(nextButtonTapped))
         self.navigationItem.rightBarButtonItem = barItem
+        self.navigationItem.title = "Filters Screen"
     }
 
     @objc private func nextButtonTapped() {
