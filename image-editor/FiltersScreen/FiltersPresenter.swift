@@ -40,28 +40,36 @@ class FiltersPresenterImpl: FiltersPresenter {
 
     func viewDidLoad() {
         self.view.setupImage(self.image)
+        self.view.startAnimation()
         DispatchQueue.global(qos: .userInteractive).async {
             self.model.applyAllFilters(for: self.image) { images in
                 self.filteredImages = images
                 DispatchQueue.main.async {
                     self.view.reloadData()
+                    self.view.stopAnimation()
                 }
             }
         }
     }
 
     func handleFilterChoose(at indexPath: IndexPath) {
+        self.view.startAnimation()
         DispatchQueue.global(qos: .userInteractive).async {
             self.model.applyFilter(for: self.model.filters[indexPath.row], image: self.image) { image in
                 DispatchQueue.main.async {
                     self.view.setupImage(image)
                     self.resultImage = image
+                    self.view.stopAnimation()
                 }
             }
         }
     }
 
     func handleNextButtonTap() {
-        self.router.showColorsScreen(with: self.resultImage)
+        if self.resultImage == nil {
+            self.router.showColorsScreen(with: self.image)
+        } else {
+            self.router.showColorsScreen(with: self.resultImage)
+        }
     }
 }

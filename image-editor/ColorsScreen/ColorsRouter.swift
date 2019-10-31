@@ -12,7 +12,8 @@ protocol ColorsRouter {
     func start()
     func stop(completion: @escaping () -> Void)
     func terminate()
-    func showSaveScreen(with image: UIImage?)
+    func showSaveScreen(startImage: UIImage?,
+                        resultImage: UIImage?)
 }
 
 class ColorsCoordinator {
@@ -46,11 +47,13 @@ extension ColorsCoordinator: ColorsRouter {
         self.onTerminate?()
     }
 
-    func showSaveScreen(with image: UIImage?) {
+    func showSaveScreen (startImage: UIImage?,
+                             resultImage: UIImage?) {
         let builder = SaveBuilderImpl()
         let coordinator = builder.build(
             parentController: self.parentController,
-            image: image
+            startImage: startImage,
+            resultImage: resultImage
         )
         coordinator.onTerminate = {
             coordinator.stop { }

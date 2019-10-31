@@ -13,6 +13,7 @@ protocol SaveRouter {
     func stop(completion: @escaping () -> Void)
     func terminate()
     func saveImage(image: UIImage?)
+    func showStartScreen()
 }
 
 class SaveCoordinator {
@@ -29,6 +30,10 @@ class SaveCoordinator {
 }
 
 extension SaveCoordinator: SaveRouter {
+    func showStartScreen() {
+        self.view?.navigationController?.popToRootViewController(animated: true)
+    }
+
     func start() {
         guard let view = view else { return }
         self.parentController.navigationController?.pushViewController(view, animated: true)

@@ -18,14 +18,17 @@ protocol SavePresenter {
 class SavePresenterImpl {
     private let view: SaveView
     private let router: SaveRouter
-    private let image: UIImage?
+    private let startImage: UIImage?
+    private let resultImage: UIImage?
 
     init(view: SaveView,
          router: SaveRouter,
-         image: UIImage?) {
+         startImage: UIImage?,
+         resultImage: UIImage?) {
         self.view = view
         self.router = router
-        self.image = image
+        self.startImage = startImage
+        self.resultImage = resultImage
     }
 }
 
@@ -35,15 +38,15 @@ extension SavePresenterImpl: SavePresenter {
     }
 
     func viewDidAppear() {
-        self.view.setupImage(self.image)
-        self.view.animateImageView()
+        self.view.animateImagesAppearing()
+        self.view.setupImages([self.resultImage, self.startImage])
     }
 
     func handleSaveButtonTap() {
-        self.router.saveImage(image: self.image)
+        self.router.saveImage(image: self.resultImage)
     }
 
     func handleCloseButtonTap() {
-        print("Close")
+        self.router.showStartScreen()
     }
 }

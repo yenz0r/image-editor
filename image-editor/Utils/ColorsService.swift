@@ -25,7 +25,8 @@ class ColorsService {
         filter.setValue(beginImage, forKey: kCIInputImageKey)
         filter.setValue(value, forKey: key)
         guard let filteredImage = filter.outputImage else { return nil }
-        return UIImage(cgImage: context.createCGImage(filteredImage, from: filteredImage.extent)!)
+        guard let cgImage = context.createCGImage(filteredImage, from: filteredImage.extent) else { return nil }
+        return UIImage(cgImage: cgImage, scale: 1.0, orientation: UIImage.Orientation.right)
     }
 
     func setupFilter(for image: UIImage?,

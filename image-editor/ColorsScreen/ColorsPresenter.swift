@@ -19,6 +19,9 @@ class ColorsPresenterImpl {
     private let router: ColorsRouter
     private let model: ColorsModel
     private var image: UIImage?
+    
+
+    private var processedImage: UIImage?
 
     init(view: ColorsView,
          router: ColorsRouter,
@@ -53,21 +56,22 @@ extension ColorsPresenterImpl: ColorsPresenter {
             print("err index")
             return
         }
-
-        DispatchQueue.global(qos: .userInteractive).async {
+        self.view.startLoadAnimation()
+        DispatchQueue.global(qos: .utility).async {
             self.model.changeColor(
                 for: self.image,
                 on: value,
                 by: filter) { image in
-                    self.image = image
+                    self.processedImage = image
                     DispatchQueue.main.async {
                         self.view.setupImage(image)
+                        self.view.stopLoadingAnimation()
                     }
                 }
         }
     }
 
     func handleNextButtonTap() {
-        self.router.showSaveScreen(with: self.image)
+        self.router.showSaveScreen(startImage: self.image, resultImage: self.processedImage)
     }
 }

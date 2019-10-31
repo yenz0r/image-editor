@@ -54,7 +54,7 @@ class FiltersService {
             return self.emptyImage
         }
 
-        return UIImage(cgImage: cgimg)
+        return UIImage(cgImage: cgimg, scale: 1.0, orientation: UIImage.Orientation.right)
     }
 
     private func filterForName(_ name: String) -> FilterType? {

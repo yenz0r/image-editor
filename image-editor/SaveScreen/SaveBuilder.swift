@@ -10,12 +10,14 @@ import UIKit
 
 protocol SaveBuilder {
     func build(parentController: UIViewController,
-               image: UIImage?) -> SaveCoordinator
+               startImage: UIImage?,
+               resultImage: UIImage?) -> SaveCoordinator
 }
 
 class SaveBuilderImpl: SaveBuilder {
     func build(parentController: UIViewController,
-               image: UIImage?) -> SaveCoordinator {
+               startImage: UIImage?,
+               resultImage: UIImage?) -> SaveCoordinator {
         let view = SaveViewImpl()
         let coordinator = SaveCoordinator(
             view: view,
@@ -24,7 +26,8 @@ class SaveBuilderImpl: SaveBuilder {
         let presenter = SavePresenterImpl(
             view: view,
             router: coordinator,
-            image: image
+            startImage: startImage,
+            resultImage: resultImage
         )
         view.presenter = presenter
         return coordinator

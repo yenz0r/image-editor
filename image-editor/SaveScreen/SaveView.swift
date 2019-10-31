@@ -9,21 +9,28 @@
 import UIKit
 
 protocol SaveView {
-    func setupImage(_ image: UIImage?)
-    func animateImageView()
+    func setupImages(_ image: [UIImage?])
+    func animateImagesAppearing()
 }
 
 class SaveViewImpl: UIViewController {
-    private var imageView: UIImageView!
+    private var scrollView: UIScrollView!
+    private var scrollContentView: UIView!
     private var saveButton: UIButton!
+    private var exitButton: UIButton!
+    private var stackView: UIStackView!
 
     var presenter: SavePresenter!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .black
 
-        self.imageView = self.setupImageView()
+        self.scrollView = self.setupScrollView()
+        self.scrollContentView = self.setupScrollContentView()
+        self.stackView = setupStackVeiw()
         self.saveButton = self.setupSaveButton()
+        self.exitButton = self.setupExitButton()
 
         self.presenter.viewDidLoad()
     }
@@ -34,24 +41,44 @@ class SaveViewImpl: UIViewController {
         self.presenter.viewDidAppear()
     }
 
-    private func setupImageView() -> UIImageView {
-        let imageView = UIImageView()
-        self.view.addSubview(imageView)
-        imageView.snp.makeConstraints { make in
-            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(imageView.snp.width)
+    private func setupScrollContentView() -> UIView {
+        let view = UIView()
+        self.scrollView.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
-        imageView.contentMode = .scaleAspectFill
-        return imageView
+        return view
+    }
+
+    private func setupScrollView() -> UIScrollView {
+        let scrollView = UIScrollView()
+        scrollView.isPagingEnabled = true
+        self.view.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.top.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.height.equalTo(scrollView.snp.width)
+        }
+        return scrollView
+    }
+
+    private func setupStackVeiw() -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+
+        self.view.addSubview(stackView)
+        stackView.snp.makeConstraints { make in
+            make.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
+            make.top.equalTo(self.scrollView.snp.bottom)
+        }
+
+        return stackView
     }
 
     private func setupSaveButton() -> UIButton {
         let button = UIButton(type: .system)
-        self.view.addSubview(button)
-        button.snp.makeConstraints { make in
-            make.bottom.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
-            make.top.equalTo(self.imageView.snp.bottom)
-        }
+        self.stackView.addArrangedSubview(button)
         button.backgroundColor = .green
         button.setTitle("SAVE", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -59,23 +86,55 @@ class SaveViewImpl: UIViewController {
         return button
     }
 
+    private func setupExitButton() -> UIButton {
+        let button = UIButton(type: .system)
+        self.stackView.addArrangedSubview(button)
+        button.backgroundColor = .red
+        button.setTitle("EXIT", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        return button
+    }
+
     @objc private func saveButtonTapped() {
         self.presenter.handleSaveButtonTap()
+    }
+
+    @objc private func exitButtonTapped() {
+        self.presenter.handleCloseButtonTap()
     }
 }
 
 extension SaveViewImpl: SaveView {
-    func setupImage(_ image: UIImage?) {
-        self.imageView.image = image
-    }
+    func setupImages(_ images: [UIImage?]) {
+        let imagesCount = images.count
+        for (index, image) in images.enumerated() {
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.image = image
+            self.scrollView.addSubview(imageView)
 
-    func animateImageView() {
-        let startTransform = self.imageView.transform
-        self.imageView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-        UIView.animate(withDuration: 1) {
-            self.imageView.transform = startTransform
+            let width = self.view.frame.size.width
+            let size = CGSize(width: width, height: width)
+            let leadingOffset = width * CGFloat(index)
+
+            imageView.snp.makeConstraints { make in
+                make.leading.equalToSuperview().offset(leadingOffset)
+                make.bottom.top.equalToSuperview()
+                make.size.equalTo(size)
+
+                if index == imagesCount - 1 {
+                    make.trailing.equalToSuperview()
+                }
+            }
         }
     }
 
-
+    func animateImagesAppearing() {
+        let startTransform = self.scrollView.transform
+        self.scrollView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+        UIView.animate(withDuration: 1) {
+            self.scrollView.transform = startTransform
+        }
+    }
 }

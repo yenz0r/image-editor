@@ -56,6 +56,9 @@ class PreviewViewImpl: UIViewController {
         self.stackView = self.setupStackView()
         self.configureNavBar()
 
+        self.rotateStartTransform = self.imageView.transform
+        self.scaleStartTransform = self.imageView.transform
+
         self.presenter.viewDidLoad()
     }
 
@@ -234,7 +237,7 @@ class PreviewViewImpl: UIViewController {
 
     private func setupScaleSlider() -> UISlider {
         let slider = UISlider()
-        slider.minimumValue = 1
+        slider.minimumValue = 0
         slider.maximumValue = 2
         slider.value = 1
         slider.addTarget(self, action: #selector(scaleSliderValueChanged), for: .valueChanged)
@@ -245,14 +248,14 @@ class PreviewViewImpl: UIViewController {
     }
 
     @objc private func sliderStartValueUpdate(slider: UISlider) {
-        switch slider.tag {
-        case 0:
-            self.rotateStartTransform = self.imageView.transform
-        case 1:
-            self.scaleStartTransform = self.imageView.transform
-        default:
-            print("incorrect tag")
-        }
+//        switch slider.tag {
+//        case 0:
+//            self.rotateStartTransform = self.imageView.transform
+//        case 1:
+//            self.scaleStartTransform = self.imageView.transform
+//        default:
+//            print("incorrect tag")
+//        }
     }
 
     @objc private func scaleSliderValueChanged(_ sender: UISlider) {
@@ -273,7 +276,7 @@ class PreviewViewImpl: UIViewController {
 
     private func scaleImage(to value: Float) {
         let value = CGFloat(value)
-        self.imageView.transform = self.scaleStartTransform.scaledBy(x: value - 1, y: value - 1)
+        self.imageView.transform = self.scaleStartTransform.scaledBy(x: value, y: value)
     }
 
     private func rotateImage(to value: Float) {
@@ -301,11 +304,13 @@ class PreviewViewImpl: UIViewController {
 extension PreviewViewImpl: PreviewView {
     func animateScaleButton(selected: Bool) {
         if selected {
+            self.scaleContainerView.isHidden = false
             UIView.animate(withDuration: 1.0) {
                 self.controlPanel.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
                 self.scaleContainerView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
             }
         } else {
+            self.scaleContainerView.isHidden = true
             UIView.animate(withDuration: 1.0) {
                 self.controlPanel.transform = CGAffineTransform.identity
                 self.scaleContainerView.transform = CGAffineTransform.identity
@@ -315,11 +320,13 @@ extension PreviewViewImpl: PreviewView {
 
     func animateRotateButton(selected: Bool) {
         if selected {
+            self.rotateContainerView.isHidden = false
             UIView.animate(withDuration: 1.0) {
                 self.controlPanel.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
                 self.rotateContainerView.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
             }
         } else {
+            self.rotateContainerView.isHidden = true
             UIView.animate(withDuration: 1.0) {
                 self.controlPanel.transform = CGAffineTransform.identity
                 self.rotateContainerView.transform = CGAffineTransform.identity

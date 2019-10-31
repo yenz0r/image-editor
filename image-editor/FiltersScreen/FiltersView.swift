@@ -11,6 +11,8 @@ import UIKit
 protocol FiltersView {
     func reloadData()
     func setupImage(_ image: UIImage?)
+    func startAnimation()
+    func stopAnimation()
 }
 
 class FiltersViewImpl: UIViewController {
@@ -58,7 +60,6 @@ class FiltersViewImpl: UIViewController {
         collectionView.register(FiltersCell.self, forCellWithReuseIdentifier: "filtersCell")
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
 
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
@@ -78,6 +79,16 @@ extension FiltersViewImpl: FiltersView {
     func setupImage(_ image: UIImage?) {
         self.imageView.image = image
     }
+
+    func startAnimation() {
+        let alertController = UIAlertController(title: "Loading..", message: "Filter is in progress..", preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func stopAnimation() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
 }
 
 extension FiltersViewImpl: UICollectionViewDataSource {

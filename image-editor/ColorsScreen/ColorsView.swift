@@ -11,6 +11,8 @@ import UIKit
 protocol ColorsView {
     func addSliderView(title: String, tag: Int)
     func setupImage(_ image: UIImage?)
+    func startLoadAnimation()
+    func stopLoadingAnimation()
 }
 
 final class ColorsViewImpl: UIViewController {
@@ -22,6 +24,7 @@ final class ColorsViewImpl: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .black
 
         self.imageView = self.setupImageView()
         self.controlsPanel = self.setupControlsPabel()
@@ -53,7 +56,7 @@ final class ColorsViewImpl: UIViewController {
             make.height.equalTo(imageView.snp.width)
             make.leading.trailing.equalToSuperview().inset(10.0)
         }
-        imageView.contentMode = .scaleAspectFill
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }
 
@@ -63,7 +66,7 @@ final class ColorsViewImpl: UIViewController {
         view.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(100)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10.0)
         }
         return view
     }
@@ -90,9 +93,10 @@ extension ColorsViewImpl: ColorsView {
 
         let slider = UISlider()
         slider.tag = tag
-        slider.minimumValue = 0.0
-        slider.maximumValue = 100.0
-        slider.addTarget(self, action: #selector(sliderValueChanged), for: .valueChanged)
+        slider.minimumValue = -1.0
+        slider.maximumValue = 1.0
+        slider.value = 0.0
+        slider.addTarget(self, action: #selector(sliderValueChanged), for: .touchUpInside)
 
         containerView.addSubview(slider)
         slider.snp.makeConstraints { make in
@@ -113,6 +117,15 @@ extension ColorsViewImpl: ColorsView {
         label.textAlignment = .center
 
         self.stackView.addArrangedSubview(containerView)
+    }
+
+    func startLoadAnimation() {
+        let alertController = UIAlertController(title: "Loading..", message: "Filter is in progress..", preferredStyle: .alert)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
+    func stopLoadingAnimation() {
+        self.dismiss(animated: true, completion: nil)
     }
 
     @objc private func sliderValueChanged(slider: UISlider) {
