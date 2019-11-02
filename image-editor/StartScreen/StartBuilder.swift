@@ -12,7 +12,7 @@ protocol StartBuilder {
     func build(window: UIWindow) -> StartRouter
 }
 
-class StartBuilderImpl: StartBuilder {
+final class StartBuilderImpl: StartBuilder {
     func build(window: UIWindow) -> StartRouter {
         let view = StartViewControllerImpl()
         let coordinator = StartCoordinator(

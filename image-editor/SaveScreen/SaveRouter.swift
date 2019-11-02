@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SaveRouter {
+protocol SaveRouter: AnyObject {
     func start()
     func stop(completion: @escaping () -> Void)
     func terminate()
@@ -16,7 +16,7 @@ protocol SaveRouter {
     func showStartScreen()
 }
 
-class SaveCoordinator {
+final class SaveCoordinator {
     private var view: SaveViewImpl?
     private let parentController: UIViewController
 

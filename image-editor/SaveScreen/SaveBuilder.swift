@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol SaveBuilder {
+protocol SaveBuilder: AnyObject {
     func build(parentController: UIViewController,
                startImage: UIImage?,
                resultImage: UIImage?) -> SaveCoordinator
 }
 
-class SaveBuilderImpl: SaveBuilder {
+final class SaveBuilderImpl: SaveBuilder {
     func build(parentController: UIViewController,
                startImage: UIImage?,
                resultImage: UIImage?) -> SaveCoordinator {

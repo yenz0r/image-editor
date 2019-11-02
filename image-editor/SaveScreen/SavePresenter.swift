@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol SavePresenter {
+protocol SavePresenter: AnyObject {
     func viewDidLoad()
     func viewDidAppear()
     func handleSaveButtonTap()
     func handleCloseButtonTap()
 }
 
-class SavePresenterImpl {
+final class SavePresenterImpl {
     private let view: SaveView
     private let router: SaveRouter
     private let startImage: UIImage?

@@ -9,7 +9,7 @@
 import UIKit
 import CoreImage
 
-class FiltersService {
+final class FiltersService {
     struct FilterType {
         let name: String
         let key: String?

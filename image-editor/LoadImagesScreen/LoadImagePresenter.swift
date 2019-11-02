@@ -16,7 +16,7 @@ protocol LoadImagesPresenter {
     var images: [UIImage?] { get set }
 }
 
-class LoadImagesPresenterImpl: LoadImagesPresenter {
+final class LoadImagesPresenterImpl {
     var images: [UIImage?]
 
     let model: LoadImagesModelImpl
@@ -31,7 +31,9 @@ class LoadImagesPresenterImpl: LoadImagesPresenter {
         self.coordinator = coordinator
         self.images = [UIImage]()
     }
+}
 
+extension LoadImagesPresenterImpl: LoadImagesPresenter {
     func updateImages() {
         self.view.showLoadingView()
         self.model.getImages { images in

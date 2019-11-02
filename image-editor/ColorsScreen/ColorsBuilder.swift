@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol ColorsBuilder {
+protocol ColorsBuilder: AnyObject {
     func build(parentController: UIViewController,
                image: UIImage?) -> ColorsCoordinator
 }
 
-class ColorsBuilderImpl: ColorsBuilder {
+final class ColorsBuilderImpl: ColorsBuilder {
     func build(parentController: UIViewController,
                image: UIImage?) -> ColorsCoordinator {
         let view = ColorsViewImpl()

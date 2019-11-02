@@ -14,7 +14,7 @@ protocol StartViewController {
     func addButton(title: String, index: Int, color: UIColor, action: (() -> Void)?)
 }
 
-class StartViewControllerImpl: UIViewController {
+final class StartViewControllerImpl: UIViewController {
     private var titleLabel: UILabel!
     private var stackView: UIStackView!
     private var stackContainerView: UIView!

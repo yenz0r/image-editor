@@ -8,27 +8,29 @@
 
 import UIKit
 
-protocol PreviewPresenter {
+protocol PreviewPresenter: AnyObject {
     func handleButtonTap(at index: Int)
     func viewDidLoad()
 }
 
-class PreviewPresenterImpl: PreviewPresenter {
+final class PreviewPresenterImpl {
     private let model: PreviewModel!
     private let view: PreviewView!
-    private let coordinator: PreviewCoordinator!
+    private let coordinator: PreviewRouter!
     private let image: UIImage!
 
     init(model: PreviewModel,
          view: PreviewView,
-         coordinator: PreviewCoordinator,
+         coordinator: PreviewRouter,
          image: UIImage?) {
         self.model = model
         self.view = view
         self.coordinator = coordinator
         self.image = image
     }
+}
 
+extension PreviewPresenterImpl: PreviewPresenter {
     func handleButtonTap(at index: Int) {
         self.model.getActionForIndex(at: index)?()
     }

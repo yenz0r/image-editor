@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol PreviewView {
+protocol PreviewView: AnyObject {
     func setupImage(_ image: UIImage?)
     func addButton(title: String, index: Int, action: (() -> Void)?)
     func animateScaleButton(selected: Bool)
@@ -16,7 +16,7 @@ protocol PreviewView {
 
 }
 
-class PreviewViewImpl: UIViewController {
+final class PreviewViewImpl: UIViewController {
     private var imageView: UIImageView!
     private var stackView: UIStackView!
 

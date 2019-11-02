@@ -8,14 +8,16 @@
 
 import UIKit
 
-protocol PreviewModel {
+protocol PreviewModel: AnyObject {
     func getActionForIndex(at index: Int) -> (() -> Void)?
     func addButton(title: String, action: (() -> Void)?)
 }
 
-class PreviewModelImpl: PreviewModel {
+final class PreviewModelImpl {
     private var buttons = [ActionButton]()
+}
 
+extension PreviewModelImpl: PreviewModel {
     func getActionForIndex(at index: Int) -> (() -> Void)? {
         guard index < self.buttons.count else {
             return nil

@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol ColorsModel {
+protocol ColorsModel: AnyObject {
     func changeColor(for image: UIImage?,
                      on value: Float,
                      by filter: ColorsService.FilterType,
                      completion: @escaping (_ image: UIImage?) -> Void)
 }
 
-class ColorsModelImpl {
+final class ColorsModelImpl {
     private let colorsService = ColorsService()
 }
 

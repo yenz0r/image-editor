@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol LoadImagesView {
+protocol LoadImagesView: AnyObject {
     func reloadData()
     func showLoadingView()
     func hideLoadingView()
 }
 
-class LoadImagesViewImpl: UIViewController {
+final class LoadImagesViewImpl: UIViewController {
     private var linkLoadingContainer: UIView!
     private var linkLoadingTextField: UITextField!
     private var linkLoadingButton: UIButton!

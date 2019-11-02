@@ -12,7 +12,7 @@ protocol FiltersBuilder {
     func build(with image: UIImage?, presentingVC: UIViewController) -> FiltersRouter
 }
 
-class FiltersBuilderImpl: FiltersBuilder {
+final class FiltersBuilderImpl: FiltersBuilder {
     func build(with image: UIImage?, presentingVC: UIViewController) -> FiltersRouter {
         let view = FiltersViewImpl()
         let coordinator = FiltersCoordinator(

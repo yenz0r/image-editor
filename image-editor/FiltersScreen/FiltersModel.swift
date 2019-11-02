@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol FiltersModel {
+protocol FiltersModel: AnyObject {
     var filters: [String] { get }
     func applyFilter(for name: String, image: UIImage?, completion: ((_ image: UIImage?) -> Void)?)
     func applyAllFilters(for image: UIImage?, completion: ((_ images: [UIImage?]) -> Void)?)
 }
 
-class FiltersModelImpl: FiltersModel {
+final class FiltersModelImpl {
     private let filtersService: FiltersService
 
     var filters: [String] {
@@ -26,7 +26,9 @@ class FiltersModelImpl: FiltersModel {
     init() {
         self.filtersService = FiltersService()
     }
+}
 
+extension FiltersModelImpl: FiltersModel {
     func applyFilter(for name: String, image: UIImage?, completion: ((_ image: UIImage?) -> Void)?) {
         completion?(self.filtersService.applyFilter(for: name, image: image))
     }

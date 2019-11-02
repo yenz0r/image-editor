@@ -9,7 +9,7 @@
 import UIKit
 import CoreImage
 
-class ColorsService {
+final class ColorsService {
     enum FilterType {
         case britness, contrast, saturation
     }
@@ -46,7 +46,9 @@ class ColorsService {
             filter = CIFilter(name: "CIColorControls")
             key = kCIInputSaturationKey
         }
+        DispatchQueue.global(qos: .utility).async {
 
+        }
         return self.useFiter(for: image, to: value, by: filter, with: key)
     }
 }

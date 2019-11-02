@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol ColorsPresenter {
+protocol ColorsPresenter: AnyObject {
     func viewDidLoad()
     func handleSliderChangeValue(index: Int, value: Float)
     func handleNextButtonTap()
 }
 
-class ColorsPresenterImpl {
+final class ColorsPresenterImpl {
     private let view: ColorsView
     private let router: ColorsRouter
     private let model: ColorsModel

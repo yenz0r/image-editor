@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol LoadImagesRouter {
+protocol LoadImagesRouter: AnyObject {
     func start()
     func showPreviewScreen(with image: UIImage?)
     func stop(completion: @escaping () -> ())
     func terminate()
 }
 
-class LoadImagesCoordinator: LoadImagesRouter {
+final class LoadImagesCoordinator {
     private let view: LoadImagesViewImpl
     private let presentingVC: UIViewController
 
@@ -26,7 +26,9 @@ class LoadImagesCoordinator: LoadImagesRouter {
         self.view = view
         self.presentingVC = presentingVC
     }
+}
 
+extension LoadImagesCoordinator: LoadImagesRouter {
     func showPreviewScreen(with image: UIImage?) {
         let builder = PreviewBuilderImpl()
         let coordinator = builder.build(with: image, presentingVC: self.view)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ColorsRouter {
+protocol ColorsRouter: AnyObject {
     func start()
     func stop(completion: @escaping () -> Void)
     func terminate()
@@ -16,7 +16,7 @@ protocol ColorsRouter {
                         resultImage: UIImage?)
 }
 
-class ColorsCoordinator {
+final class ColorsCoordinator {
     private let parentController: UIViewController
     private var view: ColorsViewImpl?
 

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol StartModel {
+protocol StartModel: AnyObject {
     func addButton(title: String, action: (() -> ())?)
     func actionForIndex(at index: Int) -> (() -> ())?
 }
@@ -18,9 +18,11 @@ struct ActionButton {
     let action: (() -> Void)?
 }
 
-class StartModelImpl: StartModel {
+final class StartModelImpl {
     private var actionButtons = [ActionButton]()
+}
 
+extension StartModelImpl: StartModel {
     func addButton(title: String, action: (() -> ())?) {
         let actionButton = ActionButton(title: title, action: action)
         self.actionButtons.append(actionButton)

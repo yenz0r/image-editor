@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol SaveView {
+protocol SaveView: AnyObject {
     func setupImages(_ image: [UIImage?])
     func animateImagesAppearing()
 }
 
-class SaveViewImpl: UIViewController {
+final class SaveViewImpl: UIViewController {
     private var scrollView: UIScrollView!
     private var scrollContentView: UIView!
     private var saveButton: UIButton!

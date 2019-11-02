@@ -13,7 +13,7 @@ protocol StartPresenter {
     func handleButtonTap(at index: Int)
 }
 
-class StartPresenterImpl: StartPresenter {
+final class StartPresenterImpl {
     private typealias ButtonAction = () -> Void
 
     private var model: StartModel!
@@ -27,7 +27,9 @@ class StartPresenterImpl: StartPresenter {
         self.view = view
         self.router = coordinator
     }
+}
 
+extension StartPresenterImpl: StartPresenter {
     func viewDidLoad() {
         self.view.setupTitle("Image Editor :D")
         self.addButton(title: "Network", index: 0, color: .orange) {

@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol FiltersPresenter {
+protocol FiltersPresenter: AnyObject {
     func viewDidLoad()
     func handleFilterChoose(at indexPath: IndexPath)
     var processedImages: [UIImage?] { get }
     func handleNextButtonTap()
 }
 
-class FiltersPresenterImpl: FiltersPresenter {
+final class FiltersPresenterImpl {
     private let model: FiltersModel!
     private let view: FiltersView!
     private let router: FiltersRouter!
@@ -37,7 +37,9 @@ class FiltersPresenterImpl: FiltersPresenter {
         self.router = coordinator
         self.image = image
     }
+}
 
+extension FiltersPresenterImpl: FiltersPresenter {
     func viewDidLoad() {
         self.view.setupImage(self.image)
         self.view.startAnimation()

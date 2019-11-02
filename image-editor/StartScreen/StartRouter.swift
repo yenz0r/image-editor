@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol StartRouter: NSObject {
+protocol StartRouter: AnyObject {
     func start()
     func stop()
     func showLoadImagesScreen()
@@ -17,18 +17,20 @@ protocol StartRouter: NSObject {
     func termiate()
 }
 
-class StartCoordinator: NSObject, StartRouter {
+final class StartCoordinator: NSObject {
     let window: UIWindow!
     let view: StartViewControllerImpl!
+
+    var onTerminate: (() -> Void)?
 
     init(window: UIWindow,
          view: StartViewControllerImpl) {
         self.window = window
         self.view = view
     }
+}
 
-    var onTerminate: (() -> Void)?
-
+extension StartCoordinator: StartRouter {
     func start() {
         let navController = UINavigationController(rootViewController: self.view)
         self.window.rootViewController = navController

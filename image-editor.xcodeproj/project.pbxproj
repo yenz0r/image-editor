@@ -13,10 +13,12 @@
 		B939A46A236A2DB000A77673 /* SavePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A469236A2DB000A77673 /* SavePresenter.swift */; };
 		B939A46C236A2DC000A77673 /* SaveRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A46B236A2DC000A77673 /* SaveRouter.swift */; };
 		B939A46E236A2DC700A77673 /* SaveBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A46D236A2DC700A77673 /* SaveBuilder.swift */; };
+		B94E6E72236D93CC00993945 /* DownloadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E6E71236D93CC00993945 /* DownloadService.swift */; };
+		B94E6E74236D94DF00993945 /* ImagesUrlsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */; };
 		B9642CAE235BBA2D00675954 /* LoadImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CAD235BBA2D00675954 /* LoadImagesCell.swift */; };
 		B9642CB0235CD43C00675954 /* PreviewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CAF235CD43C00675954 /* PreviewModel.swift */; };
 		B9642CB2235CD44300675954 /* PreviewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CB1235CD44300675954 /* PreviewPresenter.swift */; };
-		B9642CB4235CD44F00675954 /* PreviewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CB3235CD44F00675954 /* PreviewCoordinator.swift */; };
+		B9642CB4235CD44F00675954 /* PreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CB3235CD44F00675954 /* PreviewRouter.swift */; };
 		B9642CB6235CD46300675954 /* PreviewBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CB5235CD46300675954 /* PreviewBuilder.swift */; };
 		B9642CB8235CD47700675954 /* PreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9642CB7235CD47700675954 /* PreviewView.swift */; };
 		B964FAD6235BAEFA00694F02 /* StartBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B964FAD5235BAEFA00694F02 /* StartBuilder.swift */; };
@@ -56,10 +58,12 @@
 		B939A469236A2DB000A77673 /* SavePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePresenter.swift; sourceTree = "<group>"; };
 		B939A46B236A2DC000A77673 /* SaveRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveRouter.swift; sourceTree = "<group>"; };
 		B939A46D236A2DC700A77673 /* SaveBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveBuilder.swift; sourceTree = "<group>"; };
+		B94E6E71236D93CC00993945 /* DownloadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadService.swift; sourceTree = "<group>"; };
+		B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesUrlsProvider.swift; sourceTree = "<group>"; };
 		B9642CAD235BBA2D00675954 /* LoadImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadImagesCell.swift; sourceTree = "<group>"; };
 		B9642CAF235CD43C00675954 /* PreviewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewModel.swift; sourceTree = "<group>"; };
 		B9642CB1235CD44300675954 /* PreviewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewPresenter.swift; sourceTree = "<group>"; };
-		B9642CB3235CD44F00675954 /* PreviewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewCoordinator.swift; sourceTree = "<group>"; };
+		B9642CB3235CD44F00675954 /* PreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewRouter.swift; sourceTree = "<group>"; };
 		B9642CB5235CD46300675954 /* PreviewBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewBuilder.swift; sourceTree = "<group>"; };
 		B9642CB7235CD47700675954 /* PreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewView.swift; sourceTree = "<group>"; };
 		B964FAD5235BAEFA00694F02 /* StartBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartBuilder.swift; sourceTree = "<group>"; };
@@ -139,7 +143,7 @@
 			children = (
 				B9642CAF235CD43C00675954 /* PreviewModel.swift */,
 				B9642CB1235CD44300675954 /* PreviewPresenter.swift */,
-				B9642CB3235CD44F00675954 /* PreviewCoordinator.swift */,
+				B9642CB3235CD44F00675954 /* PreviewRouter.swift */,
 				B9642CB5235CD46300675954 /* PreviewBuilder.swift */,
 				B9642CB7235CD47700675954 /* PreviewView.swift */,
 			);
@@ -247,6 +251,8 @@
 			children = (
 				FE2F136D2369802F00C4C27D /* FiltersService.swift */,
 				B939A465236A1A9000A77673 /* ColorsService.swift */,
+				B94E6E71236D93CC00993945 /* DownloadService.swift */,
+				B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -383,6 +389,7 @@
 				B964FADC235BB59F00694F02 /* LoadImagesRouter.swift in Sources */,
 				B9B171F72358FBDE0043B9BA /* StartPresenter.swift in Sources */,
 				B964FAD6235BAEFA00694F02 /* StartBuilder.swift in Sources */,
+				B94E6E72236D93CC00993945 /* DownloadService.swift in Sources */,
 				B964FAE2235BB5CC00694F02 /* LoadImagesBuilder.swift in Sources */,
 				B939A466236A1A9000A77673 /* ColorsService.swift in Sources */,
 				B9A2D882236A18F100269ECB /* ColorsBuilder.swift in Sources */,
@@ -390,7 +397,8 @@
 				B939A468236A2DA600A77673 /* SaveView.swift in Sources */,
 				B9A2D86F2368E93600269ECB /* FiltersView.swift in Sources */,
 				B9A2D884236A190A00269ECB /* ColorsModel.swift in Sources */,
-				B9642CB4235CD44F00675954 /* PreviewCoordinator.swift in Sources */,
+				B94E6E74236D94DF00993945 /* ImagesUrlsProvider.swift in Sources */,
+				B9642CB4235CD44F00675954 /* PreviewRouter.swift in Sources */,
 				B9642CB8235CD47700675954 /* PreviewView.swift in Sources */,
 				B9642CB0235CD43C00675954 /* PreviewModel.swift in Sources */,
 				B9642CAE235BBA2D00675954 /* LoadImagesCell.swift in Sources */,

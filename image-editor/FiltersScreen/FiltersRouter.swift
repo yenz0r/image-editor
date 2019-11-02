@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol FiltersRouter {
+protocol FiltersRouter: AnyObject {
     func start()
     func showColorsScreen(with image: UIImage?)
 }
 
-final class FiltersCoordinator: FiltersRouter {
+final class FiltersCoordinator {
     let view: FiltersViewImpl
     let presentingVC: UIViewController
 
@@ -22,7 +22,9 @@ final class FiltersCoordinator: FiltersRouter {
         self.view = view
         self.presentingVC = presentingVC
     }
+}
 
+extension FiltersCoordinator: FiltersRouter {
     func showColorsScreen(with image: UIImage?) {
         let builder = ColorsBuilderImpl()
         let coordinator = builder.build(
@@ -39,4 +41,3 @@ final class FiltersCoordinator: FiltersRouter {
         self.presentingVC.navigationController?.pushViewController(view, animated: true)
     }
 }
-

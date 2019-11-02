@@ -12,7 +12,7 @@ protocol LoadImagesBuilder {
     func build(presetingView: UIViewController) -> LoadImagesCoordinator
 }
 
-class LoadImagesBuilderImpl: LoadImagesBuilder {
+final class LoadImagesBuilderImpl: LoadImagesBuilder {
     func build(presetingView: UIViewController) -> LoadImagesCoordinator {
         let view = LoadImagesViewImpl()
         let coordinator = LoadImagesCoordinator(

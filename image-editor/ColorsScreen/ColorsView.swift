@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ColorsView {
+protocol ColorsView: AnyObject {
     func addSliderView(title: String, tag: Int)
     func setupImage(_ image: UIImage?)
     func startLoadAnimation()

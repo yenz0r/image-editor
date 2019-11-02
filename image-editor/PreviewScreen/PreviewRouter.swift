@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol PreviewCoordinator {
+protocol PreviewRouter: AnyObject {
     func start()
     func showEditScreen(with image: UIImage?)
 }
 
-class PreviewCoordinatorImpl: PreviewCoordinator {
+final class PreviewCoordinator {
     let view: PreviewViewImpl
     let presentingVC: UIViewController
 
@@ -22,14 +22,16 @@ class PreviewCoordinatorImpl: PreviewCoordinator {
         self.view = view
         self.presentingVC = presentingVC
     }
+}
 
+extension PreviewCoordinator: PreviewRouter {
     func showEditScreen(with image: UIImage?) {
-        let builder = FiltersBuilderImpl()
-        let coordinator = builder.build(with: image, presentingVC: self.view)
-        coordinator.start()
-    }
+           let builder = FiltersBuilderImpl()
+           let coordinator = builder.build(with: image, presentingVC: self.view)
+           coordinator.start()
+       }
 
-    func start() {
-        self.presentingVC.navigationController?.pushViewController(view, animated: true)
-    }
+       func start() {
+           self.presentingVC.navigationController?.pushViewController(view, animated: true)
+       }
 }

@@ -8,14 +8,14 @@
 
 import UIKit
 
-protocol FiltersView {
+protocol FiltersView: AnyObject {
     func reloadData()
     func setupImage(_ image: UIImage?)
     func startAnimation()
     func stopAnimation()
 }
 
-class FiltersViewImpl: UIViewController {
+final class FiltersViewImpl: UIViewController {
     private var imageView: UIImageView!
     private var collectionView: UICollectionView!
 
