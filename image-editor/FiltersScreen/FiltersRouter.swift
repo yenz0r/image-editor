@@ -11,6 +11,9 @@ import UIKit
 protocol FiltersRouter: AnyObject {
     func start()
     func showColorsScreen(with image: UIImage?)
+    func startAnimation()
+    func stopAnimation()
+    func showErrorAlert()
 }
 
 final class FiltersCoordinator {
@@ -39,5 +42,22 @@ extension FiltersCoordinator: FiltersRouter {
 
     func start() {
         self.presentingVC.navigationController?.pushViewController(view, animated: true)
+    }
+
+    func startAnimation() {
+        let alertController = UIAlertController(title: "Loading..", message: "Filter is in progress..", preferredStyle: .alert)
+        self.view.present(alertController, animated: true, completion: nil)
+    }
+
+    func stopAnimation() {
+        self.view.dismiss(animated: true, completion: nil)
+    }
+
+    func showErrorAlert() {
+        let alertController = UIAlertController(title: "Error..", message: "Empty settings..", preferredStyle: .alert)
+        self.view.present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            self.view.dismiss(animated: true, completion: nil)
+        }
     }
 }

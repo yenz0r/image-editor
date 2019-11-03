@@ -13,7 +13,6 @@ protocol PreviewView: AnyObject {
     func addButton(title: String, index: Int, action: (() -> Void)?)
     func animateScaleButton(selected: Bool)
     func animateRotateButton(selected: Bool)
-
 }
 
 final class PreviewViewImpl: UIViewController {
@@ -29,6 +28,7 @@ final class PreviewViewImpl: UIViewController {
     private var rotateValueLabel: UILabel!
     private var rotateContainerView: UIView!
     private var scaleContainerView: UIView!
+    private var centeredView: UIView!
 
     private var rotateStartTransform: CGAffineTransform!
     private var scaleStartTransform: CGAffineTransform!
@@ -52,8 +52,9 @@ final class PreviewViewImpl: UIViewController {
         self.rotateContainerView = self.setupRotateContainerView()
         self.scaleContainerView = self.setupScaleContainerView()
 
-        self.imageView = self.setupImageView()
         self.stackView = self.setupStackView()
+        self.centeredView = self.setupCenteredView()
+        self.imageView = self.setupImageView()
         self.configureNavBar()
 
         self.rotateStartTransform = self.imageView.transform
@@ -65,13 +66,26 @@ final class PreviewViewImpl: UIViewController {
     private func setupImageView() -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        self.view.addSubview(imageView)
+        imageView.layer.cornerRadius = 50.0
+        imageView.layer.masksToBounds = true
+        self.centeredView.addSubview(imageView)
         imageView.snp.makeConstraints { make in
-            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20.0)
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide)
             make.center.equalToSuperview()
             make.height.equalTo(imageView.snp.width)
         }
         return imageView
+    }
+
+    private func setupCenteredView() -> UIView {
+        let view = UIView()
+        self.view.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview()
+            make.top.equalTo(self.controlPanel.snp.bottom)
+            make.bottom.equalTo(self.stackView.snp.top)
+        }
+        return view
     }
 
     private func setupScaleLabel() -> UILabel {
@@ -145,6 +159,7 @@ final class PreviewViewImpl: UIViewController {
             make.bottom.equalToSuperview().offset(-10.0)
         }
 
+        view.isHidden = true
         return view
     }
 
@@ -192,6 +207,7 @@ final class PreviewViewImpl: UIViewController {
             make.bottom.equalToSuperview().offset(-10.0)
         }
 
+        view.isHidden = true
         return view
     }
 
@@ -290,11 +306,18 @@ extension PreviewViewImpl: PreviewView {
     func animateScaleButton(selected: Bool) {
         if selected {
             self.scaleContainerView.isHidden = false
-            UIView.animate(withDuration: 1.0) {
-                self.controlPanel.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-                self.scaleContainerView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
-            }
+            UIView.animate(
+                withDuration: 1.0,
+                animations: {
+                    self.controlPanel.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+                    self.scaleContainerView.transform = CGAffineTransform(translationX: self.view.frame.width, y: 0)
+                },
+                completion: { _ in
+                    self.controlPanel.isHidden = true
+                }
+            )
         } else {
+            self.controlPanel.isHidden = false
             UIView.animate(
                 withDuration: 1.0,
                 animations: {
@@ -311,11 +334,18 @@ extension PreviewViewImpl: PreviewView {
     func animateRotateButton(selected: Bool) {
         if selected {
             self.rotateContainerView.isHidden = false
-            UIView.animate(withDuration: 1.0) {
-                self.controlPanel.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
-                self.rotateContainerView.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
-            }
+            UIView.animate(
+                withDuration: 1.0,
+                animations: {
+                    self.controlPanel.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
+                    self.rotateContainerView.transform = CGAffineTransform(translationX: -self.view.frame.width, y: 0)
+                },
+                completion: { _ in
+                    self.controlPanel.isHidden = true
+                }
+            )
         } else {
+            self.controlPanel.isHidden = false
             UIView.animate(
                 withDuration: 1.0,
                 animations: {

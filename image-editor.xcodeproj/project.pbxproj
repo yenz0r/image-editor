@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4DA6A0A6E04AEB777ABBA770 /* Pods_image_editor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8CBAECDA064F25006C6F70FD /* Pods_image_editor.framework */; };
+		B92F58D2236D9DB800E9D909 /* FiltersProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = B92F58D1236D9DB800E9D909 /* FiltersProvider.swift */; };
 		B939A466236A1A9000A77673 /* ColorsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A465236A1A9000A77673 /* ColorsService.swift */; };
 		B939A468236A2DA600A77673 /* SaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A467236A2DA600A77673 /* SaveView.swift */; };
 		B939A46A236A2DB000A77673 /* SavePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939A469236A2DB000A77673 /* SavePresenter.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		778A5FA8770B359FA9AC9C41 /* Pods-image-editor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-image-editor.release.xcconfig"; path = "Target Support Files/Pods-image-editor/Pods-image-editor.release.xcconfig"; sourceTree = "<group>"; };
 		8CBAECDA064F25006C6F70FD /* Pods_image_editor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_image_editor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B92F58D1236D9DB800E9D909 /* FiltersProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersProvider.swift; sourceTree = "<group>"; };
 		B939A465236A1A9000A77673 /* ColorsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorsService.swift; sourceTree = "<group>"; };
 		B939A467236A2DA600A77673 /* SaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveView.swift; sourceTree = "<group>"; };
 		B939A469236A2DB000A77673 /* SavePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavePresenter.swift; sourceTree = "<group>"; };
@@ -125,6 +127,32 @@
 				8CBAECDA064F25006C6F70FD /* Pods_image_editor.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B92F58D3236D9DC000E9D909 /* Filters */ = {
+			isa = PBXGroup;
+			children = (
+				FE2F136D2369802F00C4C27D /* FiltersService.swift */,
+				B92F58D1236D9DB800E9D909 /* FiltersProvider.swift */,
+			);
+			path = Filters;
+			sourceTree = "<group>";
+		};
+		B92F58D4236D9DC900E9D909 /* Downloads */ = {
+			isa = PBXGroup;
+			children = (
+				B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */,
+				B94E6E71236D93CC00993945 /* DownloadService.swift */,
+			);
+			path = Downloads;
+			sourceTree = "<group>";
+		};
+		B92F58D5236D9DE600E9D909 /* Colors */ = {
+			isa = PBXGroup;
+			children = (
+				B939A465236A1A9000A77673 /* ColorsService.swift */,
+			);
+			path = Colors;
 			sourceTree = "<group>";
 		};
 		B939A46F236A2DCE00A77673 /* SaveScreen */ = {
@@ -249,10 +277,9 @@
 		FE2F136F236989BC00C4C27D /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				FE2F136D2369802F00C4C27D /* FiltersService.swift */,
-				B939A465236A1A9000A77673 /* ColorsService.swift */,
-				B94E6E71236D93CC00993945 /* DownloadService.swift */,
-				B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */,
+				B92F58D3236D9DC000E9D909 /* Filters */,
+				B92F58D4236D9DC900E9D909 /* Downloads */,
+				B92F58D5236D9DE600E9D909 /* Colors */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -392,6 +419,7 @@
 				B94E6E72236D93CC00993945 /* DownloadService.swift in Sources */,
 				B964FAE2235BB5CC00694F02 /* LoadImagesBuilder.swift in Sources */,
 				B939A466236A1A9000A77673 /* ColorsService.swift in Sources */,
+				B92F58D2236D9DB800E9D909 /* FiltersProvider.swift in Sources */,
 				B9A2D882236A18F100269ECB /* ColorsBuilder.swift in Sources */,
 				B9A2D8752368E95500269ECB /* FiltersPresenter.swift in Sources */,
 				B939A468236A2DA600A77673 /* SaveView.swift in Sources */,
