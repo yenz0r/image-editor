@@ -28,6 +28,7 @@ final class PreviewViewImpl: UIViewController {
     private var rotateValueLabel: UILabel!
     private var rotateContainerView: UIView!
     private var scaleContainerView: UIView!
+    private var stackContainerView: UIView!
     private var centeredView: UIView!
 
     private var rotateStartTransform: CGAffineTransform!
@@ -52,6 +53,7 @@ final class PreviewViewImpl: UIViewController {
         self.rotateContainerView = self.setupRotateContainerView()
         self.scaleContainerView = self.setupScaleContainerView()
 
+        self.stackContainerView = self.setupStackContainerView()
         self.stackView = self.setupStackView()
         self.centeredView = self.setupCenteredView()
         self.imageView = self.setupImageView()
@@ -61,6 +63,9 @@ final class PreviewViewImpl: UIViewController {
         self.scaleStartTransform = self.imageView.transform
 
         self.presenter.viewDidLoad()
+        self.view.bringSubviewToFront(self.rotateContainerView)
+        self.view.bringSubviewToFront(self.scaleContainerView)
+        self.view.bringSubviewToFront(self.controlPanel)
     }
 
     private func setupImageView() -> UIImageView {
@@ -83,7 +88,7 @@ final class PreviewViewImpl: UIViewController {
         view.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview()
             make.top.equalTo(self.controlPanel.snp.bottom)
-            make.bottom.equalTo(self.stackView.snp.top)
+            make.bottom.equalTo(self.stackContainerView.snp.top)
         }
         return view
     }
@@ -285,6 +290,19 @@ final class PreviewViewImpl: UIViewController {
         self.imageView.transform = self.rotateStartTransform.rotated(by: .pi * value)
     }
 
+    private func setupStackContainerView() -> UIView {
+        let view = UIView()
+        self.view.addSubview(view)
+        view.snp.makeConstraints { make in
+            make.leading.trailing.equalTo(self.view.safeAreaLayoutGuide).inset(20.0)
+            make.height.equalTo(60.0)
+            make.bottom.equalTo(self.view.safeAreaLayoutGuide).offset(-10.0)
+        }
+        view.layer.cornerRadius = 30.0
+        view.clipsToBounds = true
+        return view
+    }
+
     private func setupStackView() -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = .horizontal
@@ -292,12 +310,11 @@ final class PreviewViewImpl: UIViewController {
         stackView.alignment = .fill
         stackView.spacing = 10.0
 
-        self.view.addSubview(stackView)
+        self.stackContainerView.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.leading.trailing.bottom.equalTo(self.view.safeAreaLayoutGuide)
-            make.height.equalTo(70)
-            make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+            make.edges.equalToSuperview()
         }
+
         return stackView
     }
 }
@@ -365,7 +382,7 @@ extension PreviewViewImpl: PreviewView {
 
     func addButton(title: String, index: Int, action: (() -> Void)?) {
         let button = UIButton(type: .system)
-        button.backgroundColor = .green
+        button.backgroundColor = .purple
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.tag = index

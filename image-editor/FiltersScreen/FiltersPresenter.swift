@@ -17,6 +17,7 @@ protocol FiltersPresenter: AnyObject {
     func handleShowFilterSettings(at index: Int)
     func hideSettingsFilterView()
     func handleUpdateKeyValue(tag: Int, value: Float)
+    func isPro(at index: Int) -> Bool
 }
 
 final class FiltersPresenterImpl {
@@ -36,6 +37,7 @@ final class FiltersPresenterImpl {
     private var filterToUpdate = ""
 
     private let filtersNames: [String]
+    private var selectedIndexPath: IndexPath? = IndexPath(row: 0, section: 0)
 
     init(model: FiltersModel,
          view: FiltersView,
@@ -55,6 +57,12 @@ final class FiltersPresenterImpl {
 }
 
 extension FiltersPresenterImpl: FiltersPresenter {
+    func isPro(at index: Int) -> Bool {
+        let filter = self.filtersNames[index]
+        guard let keys = self.model.filters[filter], let rightKeys = keys else { return false }
+        return !rightKeys.isEmpty
+    }
+
     func handleShowFilterSettings(at index: Int) {
         self.view.clearSettingsView()
         self.filterToUpdate = self.filtersNames[index]
@@ -115,12 +123,20 @@ extension FiltersPresenterImpl: FiltersPresenter {
     }
 
     func handleFilterChoose(at indexPath: IndexPath) {
+        if let selectedIndexPath = self.selectedIndexPath {
+            guard selectedIndexPath != indexPath else { return }
+            self.view.deselectCell(at: selectedIndexPath)
+        }
+        self.selectedIndexPath = indexPath
+        self.view.selectCell(at: indexPath)
         self.router.startAnimation()
-        self.model.applyFilter(for: self.filtersNames[indexPath.row], image: self.image) { image in
-            DispatchQueue.main.async {
-                self.view.setupImage(image)
-                self.resultImage = image
-                self.router.stopAnimation()
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 2) {
+            self.model.applyFilter(for: self.filtersNames[indexPath.row], image: self.image) { image in
+                DispatchQueue.main.async {
+                    self.view.setupImage(image)
+                    self.resultImage = image
+                    self.router.stopAnimation()
+                }
             }
         }
     }

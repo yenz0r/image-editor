@@ -20,6 +20,8 @@ protocol FiltersView: AnyObject {
     func showSettingsView()
     func hideSettingsView()
     func clearSettingsView()
+    func deselectCell(at indexPath: IndexPath)
+    func selectCell(at indexPath: IndexPath)
 }
 
 final class FiltersViewImpl: UIViewController {
@@ -213,7 +215,7 @@ extension FiltersViewImpl: FiltersView {
         UIView.animate(
             withDuration: 0.8,
             delay: 0,
-            usingSpringWithDamping: 0.8,
+            usingSpringWithDamping: 0.5,
             initialSpringVelocity: 0.8,
             options: [.curveEaseIn],
             animations: {
@@ -228,7 +230,7 @@ extension FiltersViewImpl: FiltersView {
     func hideSettingsView() {
         self.isSettingShown = false
         UIView.animate(
-            withDuration: 0.5,
+            withDuration: 0.3,
             animations: {
                 self.settingsView.transform = .identity
             }
@@ -241,6 +243,16 @@ extension FiltersViewImpl: FiltersView {
 
     func setupImage(_ image: UIImage?) {
         self.imageView.image = image
+    }
+
+    func deselectCell(at indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? FiltersCell else { return }
+        cell.deselectCell()
+    }
+
+    func selectCell(at indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? FiltersCell else { return }
+        cell.selectCell()
     }
 }
 
@@ -255,6 +267,7 @@ extension FiltersViewImpl: UICollectionViewDataSource {
         cell.onLongTap = {
             self.presenter.handleShowFilterSettings(at: indexPath.row)
         }
+        cell.isPro = self.presenter.isPro(at: indexPath.row)
         let longGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongTap))
         cell.addGestureRecognizer(longGesture)
         return cell
@@ -271,6 +284,7 @@ extension FiltersViewImpl: UICollectionViewDataSource {
 
 extension FiltersViewImpl: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         self.presenter.handleFilterChoose(at: indexPath)
     }
 }
