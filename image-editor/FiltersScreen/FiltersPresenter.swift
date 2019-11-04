@@ -28,6 +28,8 @@ final class FiltersPresenterImpl {
         return self.filteredImages
     }
 
+    private var selectedIndexPath: IndexPath? = IndexPath(row: 0, section: 0)
+
     init(model: FiltersModel,
          view: FiltersView,
          coordinator: FiltersRouter,
@@ -55,8 +57,13 @@ extension FiltersPresenterImpl: FiltersPresenter {
     }
 
     func handleFilterChoose(at indexPath: IndexPath) {
+        if let selectedIndexPath = self.selectedIndexPath {
+            self.view.deselectCell(at: selectedIndexPath)
+        }
+        self.selectedIndexPath = indexPath
+        self.view.selectCell(at: indexPath)
         self.view.startAnimation()
-        DispatchQueue.global(qos: .userInteractive).async {
+        DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 1) {
             self.model.applyFilter(for: self.model.filters[indexPath.row], image: self.image) { image in
                 DispatchQueue.main.async {
                     self.view.setupImage(image)

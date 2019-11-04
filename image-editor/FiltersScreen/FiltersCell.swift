@@ -10,6 +10,7 @@ import UIKit
 
 class FiltersCell: UICollectionViewCell {
     private var imageView: UIImageView!
+    private var selectedView: UIView!
 
     var image: UIImage? = nil {
         didSet {
@@ -21,6 +22,7 @@ class FiltersCell: UICollectionViewCell {
         super.init(frame: frame)
 
         self.imageView = self.setupImageView()
+        self.selectedView = self.setupSelectedView()
     }
 
     required init?(coder: NSCoder) {
@@ -28,7 +30,50 @@ class FiltersCell: UICollectionViewCell {
     }
 
     override func layoutSubviews() {
-        self.imageView.layer.cornerRadius = self.bounds.height / 2
+        self.contentView.layer.cornerRadius = self.bounds.height / 2
+        self.contentView.clipsToBounds = true
+    }
+
+    func selectCell() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.selectedView.transform = .identity
+            }
+        )
+    }
+
+    func deselectCell() {
+        UIView.animate(
+            withDuration: 0.3,
+            animations: {
+                self.selectedView.transform = CGAffineTransform(scaleX: 0, y: 0)
+            }
+        )
+    }
+
+    private func setupSelectedView() -> UIView {
+        let containerView = UIView()
+        self.contentView.addSubview(containerView)
+        containerView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+
+        self.contentView.backgroundColor = UIColor.black.withAlphaComponent(0.2)
+
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "select-mark")
+        containerView.addSubview(imageView)
+        imageView.snp.makeConstraints { make in
+            make.center.equalToSuperview()
+            make.size.equalToSuperview().multipliedBy(0.6)
+        }
+        imageView.layer.cornerRadius = self.bounds.width * 0.6 / 2
+        imageView.clipsToBounds = true
+
+        containerView.transform = CGAffineTransform(scaleX: 0, y: 0)
+
+        return containerView
     }
 
     private func setupImageView() -> UIImageView {

@@ -13,6 +13,8 @@ protocol FiltersView: AnyObject {
     func setupImage(_ image: UIImage?)
     func startAnimation()
     func stopAnimation()
+    func deselectCell(at indexPath: IndexPath)
+    func selectCell(at indexPath: IndexPath)
 }
 
 final class FiltersViewImpl: UIViewController {
@@ -90,6 +92,15 @@ extension FiltersViewImpl: FiltersView {
         self.dismiss(animated: true, completion: nil)
     }
 
+    func deselectCell(at indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? FiltersCell else { return }
+        cell.deselectCell()
+    }
+
+    func selectCell(at indexPath: IndexPath) {
+        guard let cell = self.collectionView.cellForItem(at: indexPath) as? FiltersCell else { return }
+        cell.selectCell()
+    }
 }
 
 extension FiltersViewImpl: UICollectionViewDataSource {
@@ -107,6 +118,7 @@ extension FiltersViewImpl: UICollectionViewDataSource {
 extension FiltersViewImpl: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.presenter.handleFilterChoose(at: indexPath)
+        collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
     }
 }
 
