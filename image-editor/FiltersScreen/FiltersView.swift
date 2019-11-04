@@ -211,7 +211,7 @@ extension FiltersViewImpl: FiltersView {
         guard !self.isSettingShown else { return }
         self.isSettingShown = true
         UIView.animate(
-            withDuration: 1.3,
+            withDuration: 0.8,
             delay: 0,
             usingSpringWithDamping: 0.8,
             initialSpringVelocity: 0.8,
@@ -228,7 +228,7 @@ extension FiltersViewImpl: FiltersView {
     func hideSettingsView() {
         self.isSettingShown = false
         UIView.animate(
-            withDuration: 1,
+            withDuration: 0.5,
             animations: {
                 self.settingsView.transform = .identity
             }

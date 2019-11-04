@@ -35,13 +35,7 @@ final class FiltersPresenterImpl {
     private var keysToUpdate = [String]()
     private var filterToUpdate = ""
 
-    var filtersNames: [String] {
-        var result = [String]()
-        for key in self.model.filters.keys {
-            result.append(key)
-        }
-        return result
-    }
+    private let filtersNames: [String]
 
     init(model: FiltersModel,
          view: FiltersView,
@@ -51,6 +45,12 @@ final class FiltersPresenterImpl {
         self.view = view
         self.router = coordinator
         self.image = image
+
+        var result = [String]()
+        for key in self.model.filters.keys {
+            result.append(key)
+        }
+        self.filtersNames = result
     }
 }
 
@@ -97,8 +97,8 @@ extension FiltersPresenterImpl: FiltersPresenter {
         self.view.setupImage(self.image)
         self.router.startAnimation()
         self.model.applyAllFilters(for: self.image) { dict in
-            for (key, value) in dict {
-                self.filteredImages[key, default: nil] = value
+            for filter in self.filtersNames {
+                self.filteredImages[filter, default: nil] = dict[filter] ?? nil
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.view.reloadData()
