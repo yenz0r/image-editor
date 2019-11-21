@@ -45,9 +45,10 @@
 		B9B171E72358F86C0043B9BA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9B171E62358F86C0043B9BA /* Assets.xcassets */; };
 		B9B171EA2358F86C0043B9BA /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B9B171E92358F86C0043B9BA /* Preview Assets.xcassets */; };
 		B9B171ED2358F86C0043B9BA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9B171EB2358F86C0043B9BA /* LaunchScreen.storyboard */; };
-		B9B171F52358F8950043B9BA /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F42358F8950043B9BA /* StartViewController.swift */; };
+		B9B171F52358F8950043B9BA /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F42358F8950043B9BA /* StartView.swift */; };
 		B9B171F72358FBDE0043B9BA /* StartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F62358FBDE0043B9BA /* StartPresenter.swift */; };
 		B9B171F92358FBE50043B9BA /* StartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F82358FBE50043B9BA /* StartModel.swift */; };
+		B9E1CA3F23872EDF00AB2E76 /* ImagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E1CA3E23872EDF00AB2E76 /* ImagesCache.swift */; };
 		FE2F136E2369802F00C4C27D /* FiltersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2F136D2369802F00C4C27D /* FiltersService.swift */; };
 /* End PBXBuildFile section */
 
@@ -93,9 +94,10 @@
 		B9B171E92358F86C0043B9BA /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B9B171EC2358F86C0043B9BA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B9B171EE2358F86C0043B9BA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B9B171F42358F8950043B9BA /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		B9B171F42358F8950043B9BA /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		B9B171F62358FBDE0043B9BA /* StartPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPresenter.swift; sourceTree = "<group>"; };
 		B9B171F82358FBE50043B9BA /* StartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartModel.swift; sourceTree = "<group>"; };
+		B9E1CA3E23872EDF00AB2E76 /* ImagesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCache.swift; sourceTree = "<group>"; };
 		BD7732CD85075B25F8BFBDFD /* Pods-image-editor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-image-editor.debug.xcconfig"; path = "Target Support Files/Pods-image-editor/Pods-image-editor.debug.xcconfig"; sourceTree = "<group>"; };
 		FE2F136D2369802F00C4C27D /* FiltersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -141,6 +143,7 @@
 		B92F58D4236D9DC900E9D909 /* Downloads */ = {
 			isa = PBXGroup;
 			children = (
+				B9E1CA3E23872EDF00AB2E76 /* ImagesCache.swift */,
 				B94E6E73236D94DF00993945 /* ImagesUrlsProvider.swift */,
 				B94E6E71236D93CC00993945 /* DownloadService.swift */,
 			);
@@ -265,7 +268,7 @@
 		B9B171FA2358FD250043B9BA /* StartScreen */ = {
 			isa = PBXGroup;
 			children = (
-				B9B171F42358F8950043B9BA /* StartViewController.swift */,
+				B9B171F42358F8950043B9BA /* StartView.swift */,
 				B9B171F62358FBDE0043B9BA /* StartPresenter.swift */,
 				B9B171F82358FBE50043B9BA /* StartModel.swift */,
 				B964FAD5235BAEFA00694F02 /* StartBuilder.swift */,
@@ -411,6 +414,7 @@
 				B964FADE235BB5AF00694F02 /* LoadImagePresenter.swift in Sources */,
 				B9A2D880236A18E500269ECB /* ColorsRouter.swift in Sources */,
 				B9A2D8712368E93E00269ECB /* FiltersRouter.swift in Sources */,
+				B9E1CA3F23872EDF00AB2E76 /* ImagesCache.swift in Sources */,
 				B9642CB2235CD44300675954 /* PreviewPresenter.swift in Sources */,
 				B964FAE0235BB5C000694F02 /* LoadImagesModel.swift in Sources */,
 				B964FADC235BB59F00694F02 /* LoadImagesRouter.swift in Sources */,
@@ -432,7 +436,7 @@
 				B9642CAE235BBA2D00675954 /* LoadImagesCell.swift in Sources */,
 				B939A46A236A2DB000A77673 /* SavePresenter.swift in Sources */,
 				B9B171E32358F86B0043B9BA /* SceneDelegate.swift in Sources */,
-				B9B171F52358F8950043B9BA /* StartViewController.swift in Sources */,
+				B9B171F52358F8950043B9BA /* StartView.swift in Sources */,
 				B9A2D87A2368EB4400269ECB /* FiltersCell.swift in Sources */,
 				B964FAD8235BAF3A00694F02 /* StartRouter.swift in Sources */,
 				B9A2D87C236A18D500269ECB /* ColorsView.swift in Sources */,
@@ -595,9 +599,9 @@
 			baseConfigurationReference = 778A5FA8770B359FA9AC9C41 /* Pods-image-editor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_ASSET_PATHS = "\"image-editor/Preview Content\"";
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "image-editor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -607,6 +611,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "yenz0redd.image-editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

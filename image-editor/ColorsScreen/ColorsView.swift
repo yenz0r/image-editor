@@ -88,6 +88,7 @@ final class ColorsViewImpl: UIViewController {
     }
 }
 
+// MARK: - ColorsView implementation
 extension ColorsViewImpl: ColorsView {
     func addSliderView(title: String, tag: Int) {
         let containerView = UIView()

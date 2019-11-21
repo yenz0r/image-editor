@@ -9,13 +9,15 @@
 import UIKit
 
 protocol PreviewRouter: AnyObject {
-    func start()
     func showEditScreen(with image: UIImage?)
+    func showColorsScreen(with image: UIImage?)
 }
 
 final class PreviewCoordinator {
-    let view: PreviewViewImpl
-    let presentingVC: UIViewController
+    private var view: PreviewViewImpl?
+    private let presentingVC: UIViewController
+
+    var onTerminate: (() -> Void)?
 
     init(view: PreviewViewImpl,
          presentingVC: UIViewController) {
@@ -24,14 +26,34 @@ final class PreviewCoordinator {
     }
 }
 
+// MARK: - PreviewRouter implementation
 extension PreviewCoordinator: PreviewRouter {
     func showEditScreen(with image: UIImage?) {
-           let builder = FiltersBuilderImpl()
-           let coordinator = builder.build(with: image, presentingVC: self.view)
-           coordinator.start()
-       }
+        guard let view = view else { return }
+        let builder = FiltersBuilderImpl()
+        let coordinator = builder.build(with: image, presentingVC: view)
+        coordinator.start()
+    }
 
-       func start() {
-           self.presentingVC.navigationController?.pushViewController(view, animated: true)
-       }
+    func showColorsScreen(with image: UIImage?) {
+        guard let view = view else { return }
+        let builder = ColorsBuilderImpl()
+        let coordinator = builder.build(parentController: view, image: image)
+        coordinator.onTerminate = {
+            coordinator.stop { }
+        }
+        coordinator.start()
+    }
+
+
+    func start() {
+        guard let view = view else { return }
+        self.presentingVC.navigationController?.pushViewController(view, animated: true)
+    }
+
+    func stop(completion: @escaping () -> Void) {
+        self.view = nil
+        self.presentingVC.navigationController?.popViewController(animated: true)
+        completion()
+    }
 }

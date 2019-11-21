@@ -19,6 +19,7 @@ final class LoadImagesModelImpl {
     private let downloadService = DonwloadService.shared
 }
 
+// MARK: - LoadImagesModel implementation
 extension LoadImagesModelImpl: LoadImagesModel {
     func imageForIndexPath(_ indexPath: IndexPath) -> UIImage? {
         guard indexPath.row < self.images.count else { return nil }
@@ -32,6 +33,7 @@ extension LoadImagesModelImpl: LoadImagesModel {
     func getImages(completion: @escaping (_ images: [UIImage?]) -> Void) {
         self.downloadService.downloadImages(completion: { images in
             self.images = images
+            completion(images)
         })
     }
 }

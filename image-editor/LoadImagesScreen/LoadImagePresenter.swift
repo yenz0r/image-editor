@@ -19,9 +19,9 @@ protocol LoadImagesPresenter {
 final class LoadImagesPresenterImpl {
     var images: [UIImage?]
 
-    let model: LoadImagesModelImpl
-    let view: LoadImagesViewImpl
-    let coordinator: LoadImagesCoordinator
+    private let model: LoadImagesModelImpl
+    private weak var view: LoadImagesViewImpl?
+    private let coordinator: LoadImagesCoordinator
 
     init(model: LoadImagesModelImpl,
          view: LoadImagesViewImpl,
@@ -33,13 +33,14 @@ final class LoadImagesPresenterImpl {
     }
 }
 
+// MARK: - LoadImagesPresenter implementation
 extension LoadImagesPresenterImpl: LoadImagesPresenter {
     func updateImages() {
-        self.view.showLoadingView()
-        self.model.getImages { images in
-            self.images = images
-            self.view.reloadData()
-            self.view.hideLoadingView()
+        self.view?.showLoadingView()
+        self.model.getImages { [weak self] images in
+            self?.images = images
+            self?.view?.reloadData()
+            self?.view?.hideLoadingView()
         }
     }
 
@@ -48,8 +49,8 @@ extension LoadImagesPresenterImpl: LoadImagesPresenter {
     }
 
     func handleLoadButtonTap(with link: String?) {
-        self.model.imageForURL(link) { image in
-            self.coordinator.showPreviewScreen(with: image)
+        self.model.imageForURL(link) { [weak self] image in
+            self?.coordinator.showPreviewScreen(with: image)
         }
     }
 

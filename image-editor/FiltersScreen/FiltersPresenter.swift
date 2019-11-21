@@ -22,7 +22,7 @@ protocol FiltersPresenter: AnyObject {
 
 final class FiltersPresenterImpl {
     private let model: FiltersModel!
-    private let view: FiltersView!
+    private weak var view: FiltersView?
     private let router: FiltersRouter!
     private var image: UIImage!
     private var resultImage: UIImage!
@@ -56,6 +56,7 @@ final class FiltersPresenterImpl {
     }
 }
 
+// MARK: - FiltersPresenter implementation
 extension FiltersPresenterImpl: FiltersPresenter {
     func isPro(at index: Int) -> Bool {
         let filter = self.filtersNames[index]
@@ -64,15 +65,15 @@ extension FiltersPresenterImpl: FiltersPresenter {
     }
 
     func handleShowFilterSettings(at index: Int) {
-        self.view.clearSettingsView()
+        self.view?.clearSettingsView()
         self.filterToUpdate = self.filtersNames[index]
-        self.view.setupTitleFilterText(self.filterToUpdate)
+        self.view?.setupTitleFilterText(self.filterToUpdate)
         guard let keys = self.model.filters[self.filterToUpdate], let rightKeys = keys else {
             self.router.showErrorAlert()
             return
         }
         for (index, key) in rightKeys.enumerated() {
-            self.view.addSettingsSlider(
+            self.view?.addSettingsSlider(
                 name: key.name,
                 min: key.minimumValue,
                 max: key.maximumValue,
@@ -81,36 +82,37 @@ extension FiltersPresenterImpl: FiltersPresenter {
             )
             self.keysToUpdate.append(key.name)
         }
-        self.view.showSettingsView()
+        self.view?.showSettingsView()
     }
 
     func hideSettingsFilterView() {
         self.keysToUpdate = []
-        self.view.hideSettingsView()
+        self.view?.hideSettingsView()
     }
 
     func handleUpdateKeyValue(tag: Int, value: Float) {
         self.model.updateValue(for: self.filterToUpdate, by: self.keysToUpdate[tag], on: value)
-        self.router.startAnimation()
-        self.model.applyFilter(for: self.filterToUpdate, image: self.image) { image in
+        self.router.showLoadingAlert()
+        self.model.applyFilter(for: self.filterToUpdate, image: self.image) { [weak self] image in
             DispatchQueue.main.async {
-                self.view.setupImage(image)
-                self.resultImage = image
-                self.router.stopAnimation()
+                self?.view?.setupImage(image)
+                self?.resultImage = image
+                self?.router.hideLoadingAlert()
             }
         }
     }
 
     func viewDidAppear() {
-        self.view.setupImage(self.image)
-        self.router.startAnimation()
-        self.model.applyAllFilters(for: self.image) { dict in
+        self.view?.setupImage(self.image)
+        self.router.showLoadingAlert()
+        self.model.applyAllFilters(for: self.image) { [weak self] dict in
+            guard let self = self else { return }
             for filter in self.filtersNames {
                 self.filteredImages[filter, default: nil] = dict[filter] ?? nil
             }
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.view.reloadData()
-                self.router.stopAnimation()
+                self.view?.reloadData()
+                self.router.hideLoadingAlert()
             }
         }
     }
@@ -125,17 +127,18 @@ extension FiltersPresenterImpl: FiltersPresenter {
     func handleFilterChoose(at indexPath: IndexPath) {
         if let selectedIndexPath = self.selectedIndexPath {
             guard selectedIndexPath != indexPath else { return }
-            self.view.deselectCell(at: selectedIndexPath)
+            self.view?.deselectCell(at: selectedIndexPath)
         }
         self.selectedIndexPath = indexPath
-        self.view.selectCell(at: indexPath)
-        self.router.startAnimation()
+        self.view?.selectCell(at: indexPath)
+        self.router.showLoadingAlert()
         DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 2) {
-            self.model.applyFilter(for: self.filtersNames[indexPath.row], image: self.image) { image in
+            self.model.applyFilter(for: self.filtersNames[indexPath.row], image: self.image) { [weak self] image in
+                guard let self = self else { return }
                 DispatchQueue.main.async {
-                    self.view.setupImage(image)
+                    self.view?.setupImage(image)
                     self.resultImage = image
-                    self.router.stopAnimation()
+                    self.router.hideLoadingAlert()
                 }
             }
         }

@@ -29,6 +29,7 @@ final class SaveCoordinator {
     }
 }
 
+// MARK: - SaveRouter implementation
 extension SaveCoordinator: SaveRouter {
     func showStartScreen() {
         self.view?.navigationController?.popToRootViewController(animated: true)
@@ -40,6 +41,7 @@ extension SaveCoordinator: SaveRouter {
     }
 
     func stop(completion: @escaping () -> Void) {
+        self.parentController.navigationController?.popViewController(animated: true)
         self.view = nil
         completion()
     }

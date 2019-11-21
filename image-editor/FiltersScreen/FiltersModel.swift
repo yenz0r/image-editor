@@ -23,6 +23,7 @@ final class FiltersModelImpl {
     }
 }
 
+// MARK: - FilterModel implementation
 extension FiltersModelImpl: FiltersModel {
     func updateValue(for name: String, by key: String, on value: Float) {
         self.filtersService.updateValue(for: name, by: key, on: value)

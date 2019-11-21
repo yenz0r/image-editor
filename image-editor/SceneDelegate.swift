@@ -21,6 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 return
             }
             let coordinator = startBuilder.build(window: initWindow)
+            coordinator.onTerminate = {
+                coordinator.stop { print("start screen remoced") }
+            }
             coordinator.start()
         }
     }

@@ -16,12 +16,12 @@ protocol StartPresenter {
 final class StartPresenterImpl {
     private typealias ButtonAction = () -> Void
 
-    private var model: StartModel!
-    private var view: StartViewController!
-    private var router: StartRouter!
+    private let model: StartModel
+    private weak var view: StartView?
+    private let router: StartRouter
 
     init(model: StartModel,
-         view: StartViewController,
+         view: StartView,
          coordinator: StartRouter) {
         self.model = model
         self.view = view
@@ -31,7 +31,7 @@ final class StartPresenterImpl {
 
 extension StartPresenterImpl: StartPresenter {
     func viewDidLoad() {
-        self.view.setupTitle("Image Editor :D")
+        self.view?.setupTitle("Image Editor :D")
         self.addButton(title: "Network", index: 0, color: .orange) {
             self.router.showLoadImagesScreen()
         }
@@ -51,7 +51,7 @@ extension StartPresenterImpl: StartPresenter {
     }
 
     private func addButton(title: String, index: Int, color: UIColor, action: ButtonAction?) {
-        self.view.addButton(title: title, index: index, color: color, action: action)
+        self.view?.addButton(title: title, index: index, color: color, action: action)
         self.model.addButton(title: title, action: action)
     }
 }

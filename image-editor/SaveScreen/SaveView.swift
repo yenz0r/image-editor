@@ -34,13 +34,10 @@ final class SaveViewImpl: UIViewController {
         self.stackView = self.setupStackVeiw()
         self.saveButton = self.setupSaveButton()
         self.exitButton = self.setupExitButton()
-
-        self.presenter.viewDidLoad()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-
         self.presenter.viewDidAppear()
     }
 
@@ -123,6 +120,7 @@ final class SaveViewImpl: UIViewController {
     }
 }
 
+// MARK: - SaveView implementation
 extension SaveViewImpl: SaveView {
     func setupImages(_ images: [UIImage?]) {
         let imagesCount = images.count

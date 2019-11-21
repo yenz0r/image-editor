@@ -17,6 +17,7 @@ final class PreviewModelImpl {
     private var buttons = [ActionButton]()
 }
 
+// MARK: - PreviewModel implementation
 extension PreviewModelImpl: PreviewModel {
     func getActionForIndex(at index: Int) -> (() -> Void)? {
         guard index < self.buttons.count else {

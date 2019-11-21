@@ -15,7 +15,7 @@ protocol ColorsPresenter: AnyObject {
 }
 
 final class ColorsPresenterImpl {
-    private let view: ColorsView
+    private weak var view: ColorsView?
     private let router: ColorsRouter
     private let model: ColorsModel
     private var image: UIImage?
@@ -34,13 +34,14 @@ final class ColorsPresenterImpl {
     }
 }
 
+// MARK: - ColorsPresenter implementation
 extension ColorsPresenterImpl: ColorsPresenter {
     func viewDidLoad() {
-        self.view.addSliderView(title: "Brighness", tag: 0)
-        self.view.addSliderView(title: "Contrast", tag: 1)
-        self.view.addSliderView(title: "Saturation", tag: 2)
+        self.view?.addSliderView(title: "Brighness", tag: 0)
+        self.view?.addSliderView(title: "Contrast", tag: 1)
+        self.view?.addSliderView(title: "Saturation", tag: 2)
 
-        self.view.setupImage(self.image)
+        self.view?.setupImage(self.image)
     }
 
     func handleSliderChangeValue(index: Int, value: Float) {
@@ -56,16 +57,16 @@ extension ColorsPresenterImpl: ColorsPresenter {
             print("err index")
             return
         }
-        self.view.startLoadAnimation()
+        self.view?.startLoadAnimation()
         DispatchQueue.global(qos: .utility).async {
             self.model.changeColor(
                 for: self.image,
                 on: value,
-                by: filter) { image in
-                    self.processedImage = image
+                by: filter) { [weak self] image in
+                    self?.processedImage = image
                     DispatchQueue.main.async {
-                        self.view.setupImage(image)
-                        self.view.stopLoadingAnimation()
+                        self?.view?.setupImage(image)
+                        self?.view?.stopLoadingAnimation()
                     }
                 }
         }

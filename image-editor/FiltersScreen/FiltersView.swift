@@ -163,6 +163,7 @@ final class FiltersViewImpl: UIViewController {
     }
 }
 
+// MARK: - FiltersView implementation
 extension FiltersViewImpl: FiltersView {
     func setupTitleFilterText(_ text: String) {
         self.filterTitleLabel.text = text
@@ -256,6 +257,7 @@ extension FiltersViewImpl: FiltersView {
     }
 }
 
+// MARK: - UICollectionViewDataSource implementation
 extension FiltersViewImpl: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.presenter.processedImages.count
@@ -282,6 +284,7 @@ extension FiltersViewImpl: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate implementation
 extension FiltersViewImpl: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
@@ -289,6 +292,7 @@ extension FiltersViewImpl: UICollectionViewDelegate {
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout implementation
 extension FiltersViewImpl: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.collectionViewHeight, height: self.collectionViewHeight)

@@ -11,14 +11,14 @@ import UIKit
 protocol FiltersRouter: AnyObject {
     func start()
     func showColorsScreen(with image: UIImage?)
-    func startAnimation()
-    func stopAnimation()
+    func showLoadingAlert()
+    func hideLoadingAlert()
     func showErrorAlert()
 }
 
 final class FiltersCoordinator {
-    let view: FiltersViewImpl
-    let presentingVC: UIViewController
+    private var view: FiltersViewImpl?
+    private let presentingVC: UIViewController
 
     init(view: FiltersViewImpl,
          presentingVC: UIViewController) {
@@ -27,11 +27,13 @@ final class FiltersCoordinator {
     }
 }
 
+// MARK: - FiltersRouter implementation
 extension FiltersCoordinator: FiltersRouter {
     func showColorsScreen(with image: UIImage?) {
+        guard let view = view else { return }
         let builder = ColorsBuilderImpl()
         let coordinator = builder.build(
-            parentController: self.view,
+            parentController: view,
             image: image
         )
         coordinator.onTerminate = {
@@ -41,23 +43,27 @@ extension FiltersCoordinator: FiltersRouter {
     }
 
     func start() {
+        guard let view = view else { return }
         self.presentingVC.navigationController?.pushViewController(view, animated: true)
     }
 
-    func startAnimation() {
+    func showLoadingAlert() {
+        guard let view = view else { return }
         let alertController = UIAlertController(title: "Loading..", message: "Filter is in progress..", preferredStyle: .alert)
-        self.view.present(alertController, animated: true, completion: nil)
+        view.present(alertController, animated: true, completion: nil)
     }
 
-    func stopAnimation() {
-        self.view.dismiss(animated: true, completion: nil)
+    func hideLoadingAlert() {
+        guard let view = view else { return }
+        view.dismiss(animated: true, completion: nil)
     }
 
     func showErrorAlert() {
+        guard let view = view else { return }
         let alertController = UIAlertController(title: "Error..", message: "Empty settings..", preferredStyle: .alert)
-        self.view.present(alertController, animated: true, completion: nil)
+        view.present(alertController, animated: true, completion: nil)
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            self.view.dismiss(animated: true, completion: nil)
+            view.dismiss(animated: true, completion: nil)
         }
     }
 }

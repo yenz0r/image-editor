@@ -10,7 +10,7 @@ import UIKit
 
 protocol PreviewView: AnyObject {
     func setupImage(_ image: UIImage?)
-    func addButton(title: String, index: Int, action: (() -> Void)?)
+    func addButton(title: String, index: Int, color: UIColor, action: (() -> Void)?)
     func animateScaleButton(selected: Bool)
     func animateRotateButton(selected: Bool)
 }
@@ -319,6 +319,7 @@ final class PreviewViewImpl: UIViewController {
     }
 }
 
+// MARK: - PreviewView implementation
 extension PreviewViewImpl: PreviewView {
     func animateScaleButton(selected: Bool) {
         if selected {
@@ -380,9 +381,9 @@ extension PreviewViewImpl: PreviewView {
         self.presenter.handleButtonTap(at: sender.tag)
     }
 
-    func addButton(title: String, index: Int, action: (() -> Void)?) {
+    func addButton(title: String, index: Int, color: UIColor, action: (() -> Void)?) {
         let button = UIButton(type: .system)
-        button.backgroundColor = .purple
+        button.backgroundColor = color
         button.setTitle(title, for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.tag = index

@@ -19,6 +19,7 @@ final class ColorsModelImpl {
     private let colorsService = ColorsService()
 }
 
+// MARK: - ColorsModel implementation
 extension ColorsModelImpl: ColorsModel {
     func changeColor(for image: UIImage?,
                      on value: Float,

@@ -9,8 +9,6 @@
 import UIKit
 
 protocol ColorsRouter: AnyObject {
-    func start()
-    func stop(completion: @escaping () -> Void)
     func terminate()
     func showSaveScreen(startImage: UIImage?,
                         resultImage: UIImage?)
@@ -29,6 +27,7 @@ final class ColorsCoordinator {
     }
 }
 
+// MARK: - ColorsCoordinator implementation
 extension ColorsCoordinator: ColorsRouter {
     func start() {
         guard let view = view else {

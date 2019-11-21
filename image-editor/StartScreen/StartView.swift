@@ -9,12 +9,12 @@
 import UIKit
 import SnapKit
 
-protocol StartViewController {
+protocol StartView: AnyObject {
     func setupTitle(_ text: String)
     func addButton(title: String, index: Int, color: UIColor, action: (() -> Void)?)
 }
 
-final class StartViewControllerImpl: UIViewController {
+final class StartViewImpl: UIViewController {
     private var titleLabel: UILabel!
     private var stackView: UIStackView!
     private var stackContainerView: UIView!
@@ -80,7 +80,8 @@ final class StartViewControllerImpl: UIViewController {
     }
 }
 
-extension StartViewControllerImpl: StartViewController {
+// MARK: - StartView implementation
+extension StartViewImpl: StartView {
     func setupTitle(_ text: String) {
         self.titleLabel.text = text
     }

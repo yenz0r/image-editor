@@ -9,11 +9,11 @@
 import UIKit
 
 protocol PreviewBuilder {
-    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewRouter
+    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewCoordinator
 }
 
 final class PreviewBuilderImpl: PreviewBuilder {
-    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewRouter {
+    func build(with image: UIImage?, presentingVC: UIViewController) -> PreviewCoordinator {
         let view = PreviewViewImpl()
         let coordinator = PreviewCoordinator(
             view: view,

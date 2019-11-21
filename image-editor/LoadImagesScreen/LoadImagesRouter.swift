@@ -9,14 +9,12 @@
 import UIKit
 
 protocol LoadImagesRouter: AnyObject {
-    func start()
     func showPreviewScreen(with image: UIImage?)
-    func stop(completion: @escaping () -> ())
     func terminate()
 }
 
 final class LoadImagesCoordinator {
-    private let view: LoadImagesViewImpl
+    private var view: LoadImagesViewImpl?
     private let presentingVC: UIViewController
 
     var onTerminate: (() -> Void)?
@@ -28,18 +26,25 @@ final class LoadImagesCoordinator {
     }
 }
 
+// MARK: - LoadImagesRouter implementation
 extension LoadImagesCoordinator: LoadImagesRouter {
     func showPreviewScreen(with image: UIImage?) {
+        guard let view = view else { return }
         let builder = PreviewBuilderImpl()
-        let coordinator = builder.build(with: image, presentingVC: self.view)
+        let coordinator = builder.build(with: image, presentingVC: view)
+        coordinator.onTerminate = {
+            coordinator.stop { }
+        }
         coordinator.start()
     }
 
     func start() {
-        self.presentingVC.navigationController?.pushViewController(self.view, animated: true)
+        guard let view = self.view else { return }
+        self.presentingVC.navigationController?.pushViewController(view, animated: true)
     }
 
     func stop(completion: @escaping () -> ()) {
+        self.view = nil
         self.presentingVC.dismiss(animated: true, completion: completion)
     }
 

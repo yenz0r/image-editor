@@ -9,14 +9,13 @@
 import UIKit
 
 protocol SavePresenter: AnyObject {
-    func viewDidLoad()
     func viewDidAppear()
     func handleSaveButtonTap()
     func handleCloseButtonTap()
 }
 
 final class SavePresenterImpl {
-    private let view: SaveView
+    private weak var view: SaveView?
     private let router: SaveRouter
     private let startImage: UIImage?
     private let resultImage: UIImage?
@@ -32,14 +31,11 @@ final class SavePresenterImpl {
     }
 }
 
+// MARK: - SavePresenter implementation
 extension SavePresenterImpl: SavePresenter {
-    func viewDidLoad() {
-
-    }
-
     func viewDidAppear() {
-        self.view.animateImagesAppearing()
-        self.view.setupImages([self.resultImage, self.startImage])
+        self.view?.animateImagesAppearing()
+        self.view?.setupImages([self.resultImage, self.startImage])
     }
 
     func handleSaveButtonTap() {

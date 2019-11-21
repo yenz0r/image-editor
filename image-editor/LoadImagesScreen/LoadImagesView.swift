@@ -125,6 +125,7 @@ final class LoadImagesViewImpl: UIViewController {
     }
 }
 
+// MARK: - UICollectionViewDataSource implementation
 extension LoadImagesViewImpl: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.presenter.images.count
@@ -137,12 +138,14 @@ extension LoadImagesViewImpl: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate implementation
 extension LoadImagesViewImpl: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.presenter.handleCellTap(at: indexPath)
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout implementation
 extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: self.view.frame.width / 3, height: self.view.frame.width / 3)
@@ -161,6 +164,7 @@ extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
     }
 }
 
+// MARK: - LoadImagesView implementation
 extension LoadImagesViewImpl: LoadImagesView {
     func showLoadingView() {
         self.loadingView.isHidden = false
