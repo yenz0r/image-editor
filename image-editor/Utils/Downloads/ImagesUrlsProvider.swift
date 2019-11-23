@@ -34,16 +34,20 @@ final class ImagesUrlsProvider {
         "food",
         "forest",
         "halloween",
-        "human"
+        "human",
+        "green",
+        "guitar"
     ]
+
+    private var lastUsedIndex = 0
 
     func getUrls(for number: Int) -> [String] {
         var result = [String]()
-        (0..<number).forEach { _ in
-            let randomIndex = Int.random(in: 0..<self.tags.count)
-            let url = "\(self.baseUrl)/?\(tags[randomIndex])"
-            result.append(url)
+        let first = self.tags[self.lastUsedIndex]
+        for (index, value) in self.tags.enumerated() where index != self.lastUsedIndex {
+            result.append("\(self.baseUrl)/?\(first),\(value)")
         }
+        self.lastUsedIndex += self.lastUsedIndex == self.tags.count ? -self.tags.count : 1
         return result
     }
 

@@ -12,6 +12,14 @@ protocol LoadImagesView: AnyObject {
     func reloadData()
     func showLoadingView()
     func hideLoadingView()
+    func startPagingAnimation()
+    func stopPagingAnimation()
+    func insertItems(at paths: [IndexPath])
+}
+
+protocol LoadImagesAnimationDelegate: AnyObject {
+    func startLoading()
+    func stopLoading()
 }
 
 final class LoadImagesViewImpl: UIViewController {
@@ -25,6 +33,8 @@ final class LoadImagesViewImpl: UIViewController {
     private var collectionView: UICollectionView!
 
     var presenter: LoadImagesPresenter!
+
+    private weak var animationDelegate: LoadImagesAnimationDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -111,13 +121,14 @@ final class LoadImagesViewImpl: UIViewController {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
 
         collectionView.register(LoadImagesCell.self, forCellWithReuseIdentifier: "imagesCell")
+        collectionView.register(LoadImagesCollectionFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "footerView")
 
         collectionView.delegate = self
         collectionView.dataSource = self
 
         self.view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(self.linkLoadingContainer.snp.bottom)
+            make.top.equalTo(self.linkLoadingContainer.snp.bottom).offset(10.0)
             make.leading.trailing.bottom.equalToSuperview()
         }
         collectionView.backgroundColor = .black
@@ -135,6 +146,13 @@ extension LoadImagesViewImpl: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imagesCell", for: indexPath) as! LoadImagesCell
         cell.image = self.presenter.images[indexPath.row]
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        let footerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "footerView", for: indexPath)
+        guard let animationDelegate = footerView as? LoadImagesCollectionFooterView else { return footerView }
+        self.animationDelegate = animationDelegate
+        return footerView
     }
 }
 
@@ -162,6 +180,14 @@ extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
     }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: self.collectionView.bounds.width, height: 30.0)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        self.presenter.nextImagesIfNeeded(for: indexPath.row)
+    }
 }
 
 // MARK: - LoadImagesView implementation
@@ -176,7 +202,21 @@ extension LoadImagesViewImpl: LoadImagesView {
         self.loadingIndicator.stopAnimating()
     }
 
+    func startPagingAnimation() {
+        self.animationDelegate?.startLoading()
+    }
+
+    func stopPagingAnimation() {
+        self.animationDelegate?.stopLoading()
+    }
+
     func reloadData() {
         self.collectionView.reloadData()
+    }
+
+    func insertItems(at paths: [IndexPath]) {
+        UIView.setAnimationsEnabled(false)
+        self.collectionView.insertItems(at: paths)
+        UIView.setAnimationsEnabled(true)
     }
 }

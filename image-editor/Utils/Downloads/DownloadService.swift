@@ -16,7 +16,7 @@ final class DonwloadService {
     private init() { }
 
     func downloadImages(completion: ((_ images: [UIImage?]) -> Void)?) {
-        let urls = ImagesUrlsProvider.shared.getUrls(for: 20)
+        let urls = ImagesUrlsProvider.shared.getUrls(for: 21)
         let dispatchGroup = DispatchGroup()
         urls.indices.forEach {_ in dispatchGroup.enter() }
         for stringURL in urls {
@@ -30,11 +30,9 @@ final class DonwloadService {
             let dataTask = URLSession.shared.dataTask(with: url) { [weak self] data, _, err in
                 guard err == nil, let data = data else { return }
                 let image = UIImage(data: data)
-                DispatchQueue.main.async {
-                    if let resultImage = image {
-                        self?.cacheService.appendImage(resultImage, with: stringURL)
-                        self?.images.append(image)
-                    }
+                if let resultImage = image {
+                    self?.cacheService.appendImage(resultImage, with: stringURL)
+                    self?.images.append(image)
                 }
                 dispatchGroup.leave()
             }

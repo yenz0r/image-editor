@@ -13,18 +13,19 @@ protocol LoadImagesPresenter {
     func handleCellTap(at indexPath: IndexPath)
     func viewDidLoad()
     func updateImages()
+    func nextImagesIfNeeded(for index: Int)
     var images: [UIImage?] { get set }
 }
 
 final class LoadImagesPresenterImpl {
     var images: [UIImage?]
 
-    private let model: LoadImagesModelImpl
-    private weak var view: LoadImagesViewImpl?
-    private let coordinator: LoadImagesCoordinator
+    private let model: LoadImagesModel
+    private weak var view: LoadImagesView?
+    private let coordinator: LoadImagesRouter
 
-    init(model: LoadImagesModelImpl,
-         view: LoadImagesViewImpl,
+    init(model: LoadImagesModel,
+         view: LoadImagesView,
          coordinator: LoadImagesCoordinator) {
         self.model = model
         self.view = view
@@ -35,6 +36,19 @@ final class LoadImagesPresenterImpl {
 
 // MARK: - LoadImagesPresenter implementation
 extension LoadImagesPresenterImpl: LoadImagesPresenter {
+    func nextImagesIfNeeded(for index: Int) {
+        self.view?.startPagingAnimation()
+        let lastIndex = images.count
+        if index % 21 == 0 {
+            self.model.getImages { [weak self] images in
+                self?.images.append(contentsOf: images)
+                let paths = (lastIndex..<images.count + lastIndex).compactMap { IndexPath(item: $0, section: 0) }
+                self?.view?.insertItems(at: paths)
+                self?.view?.stopPagingAnimation()
+            }
+        }
+    }
+
     func updateImages() {
         self.view?.showLoadingView()
         self.model.getImages { [weak self] images in
