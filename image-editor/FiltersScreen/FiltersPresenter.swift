@@ -21,11 +21,11 @@ protocol FiltersPresenter: AnyObject {
 }
 
 final class FiltersPresenterImpl {
-    private let model: FiltersModel!
+    private let model: FiltersModel
     private weak var view: FiltersView?
-    private let router: FiltersRouter!
-    private var image: UIImage!
-    private var resultImage: UIImage!
+    private let router: FiltersRouter
+    private var image: UIImage?
+    private var resultImage: UIImage?
 
     private var filteredImages = [String: UIImage?]()
 
