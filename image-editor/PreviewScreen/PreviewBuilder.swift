@@ -19,9 +19,7 @@ final class PreviewBuilderImpl: PreviewBuilder {
             view: view,
             presentingVC: presentingVC
         )
-        let model = PreviewModelImpl()
         let presenter = PreviewPresenterImpl(
-            model: model,
             view: view,
             coordinator: coordinator,
             image: image

@@ -14,16 +14,15 @@ protocol PreviewPresenter: AnyObject {
 }
 
 final class PreviewPresenterImpl {
-    private let model: PreviewModel!
     private weak var view: PreviewView?
-    private let coordinator: PreviewRouter!
-    private let image: UIImage!
+    private let coordinator: PreviewRouter
+    private let image: UIImage?
 
-    init(model: PreviewModel,
-         view: PreviewView,
+    private var buttonsActions: [() -> Void] = []
+
+    init(view: PreviewView,
          coordinator: PreviewRouter,
          image: UIImage?) {
-        self.model = model
         self.view = view
         self.coordinator = coordinator
         self.image = image
@@ -33,16 +32,16 @@ final class PreviewPresenterImpl {
 // MARK: - PreviewPresenter implementation
 extension PreviewPresenterImpl: PreviewPresenter {
     func handleButtonTap(at index: Int) {
-        self.model.getActionForIndex(at: index)?()
+        self.buttonsActions[index]()
     }
 
     private func setupImage(_ image: UIImage?) {
         self.view?.setupImage(image)
     }
 
-    private func addButton(title: String, index: Int, color: UIColor, action: (() -> Void)?) {
+    private func addButton(title: String, index: Int, color: UIColor, action: @escaping () -> Void) {
         self.view?.addButton(title: title, index: index, color: color, action: action)
-        self.model.addButton(title: title, action: action)
+        self.buttonsActions.append(action)
     }
 
     func viewDidLoad() {

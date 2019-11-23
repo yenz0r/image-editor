@@ -16,7 +16,7 @@ protocol StartRouter: AnyObject {
 }
 
 final class StartCoordinator: NSObject {
-    private let window: UIWindow!
+    private let window: UIWindow
     private var view: StartViewImpl?
 
     var onTerminate: (() -> Void)?
