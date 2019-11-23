@@ -18,9 +18,7 @@ final class StartBuilderImpl: StartBuilder {
         let coordinator = StartCoordinator(
             window: window, view: view
         )
-        let model = StartModelImpl()
         let presenter = StartPresenterImpl(
-            model: model,
             view: view,
             coordinator: coordinator
         )

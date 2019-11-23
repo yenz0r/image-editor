@@ -14,16 +14,13 @@ protocol StartPresenter {
 }
 
 final class StartPresenterImpl {
-    private typealias ButtonAction = () -> Void
-
-    private let model: StartModel
     private weak var view: StartView?
     private let router: StartRouter
 
-    init(model: StartModel,
-         view: StartView,
+    private var buttonsActions: [() -> Void] = []
+
+    init(view: StartView,
          coordinator: StartRouter) {
-        self.model = model
         self.view = view
         self.router = coordinator
     }
@@ -44,14 +41,11 @@ extension StartPresenterImpl: StartPresenter {
     }
 
     func handleButtonTap(at index: Int) {
-        guard let action = self.model.actionForIndex(at: index) else {
-            return
-        }
-        action()
+        self.buttonsActions[index]()
     }
 
-    private func addButton(title: String, index: Int, color: UIColor, action: ButtonAction?) {
+    private func addButton(title: String, index: Int, color: UIColor, action: @escaping () -> Void) {
         self.view?.addButton(title: title, index: index, color: color, action: action)
-        self.model.addButton(title: title, action: action)
+        self.buttonsActions.append(action)
     }
 }
