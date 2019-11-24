@@ -9,30 +9,29 @@
 import UIKit
 
 protocol LoadImagesModel: AnyObject {
-    func getImages(completion: @escaping (_ images: [UIImage?]) -> Void)
-    func imageForIndexPath(_ indexPath: IndexPath) -> UIImage?
+    func getImages(fromBegining: Bool, completion: @escaping (_ images: [UIImage?]) -> Void)
     func imageForURL(_ url: String?, completion: @escaping (_ image: UIImage?) -> Void)
+    var images: [UIImage?] { get }
 }
 
 final class LoadImagesModelImpl {
-    private var images = [UIImage?]()
+    private var loadedImages = [UIImage?]()
     private let downloadService = DonwloadService.shared
 }
 
 // MARK: - LoadImagesModel implementation
 extension LoadImagesModelImpl: LoadImagesModel {
-    func imageForIndexPath(_ indexPath: IndexPath) -> UIImage? {
-        guard indexPath.row < self.images.count else { return nil }
-        return self.images[indexPath.row]
+    var images: [UIImage?] {
+        return self.loadedImages
     }
 
     func imageForURL(_ url: String?, completion: @escaping (_ image: UIImage?) -> Void) {
         self.downloadService.downloadImageForUrl(url: url, completion: completion)
     }
 
-    func getImages(completion: @escaping (_ images: [UIImage?]) -> Void) {
-        self.downloadService.downloadImages(completion: { images in
-            self.images = images
+    func getImages(fromBegining: Bool, completion: @escaping (_ images: [UIImage?]) -> Void) {
+        self.downloadService.downloadImages(fromBegining: fromBegining, completion: { images in
+            self.loadedImages.append(contentsOf: images)
             completion(images)
         })
     }

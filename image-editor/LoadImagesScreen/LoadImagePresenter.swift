@@ -14,12 +14,10 @@ protocol LoadImagesPresenter {
     func viewDidLoad()
     func updateImages()
     func nextImagesIfNeeded(for index: Int)
-    var images: [UIImage?] { get set }
+    var images: [UIImage?] { get }
 }
 
 final class LoadImagesPresenterImpl {
-    var images: [UIImage?]
-
     private let model: LoadImagesModel
     private weak var view: LoadImagesView?
     private let coordinator: LoadImagesRouter
@@ -30,18 +28,20 @@ final class LoadImagesPresenterImpl {
         self.model = model
         self.view = view
         self.coordinator = coordinator
-        self.images = [UIImage]()
     }
 }
 
 // MARK: - LoadImagesPresenter implementation
 extension LoadImagesPresenterImpl: LoadImagesPresenter {
+    var images: [UIImage?] {
+        return self.model.images
+    }
+
     func nextImagesIfNeeded(for index: Int) {
-        self.view?.startPagingAnimation()
-        let lastIndex = images.count
-        if index % 21 == 0 {
-            self.model.getImages { [weak self] images in
-                self?.images.append(contentsOf: images)
+        if index == self.model.images.count - 1 {
+            self.view?.startPagingAnimation()
+            let lastIndex = self.model.images.count
+            self.model.getImages(fromBegining: false) { [weak self] images in
                 let paths = (lastIndex..<images.count + lastIndex).compactMap { IndexPath(item: $0, section: 0) }
                 self?.view?.insertItems(at: paths)
                 self?.view?.stopPagingAnimation()
@@ -51,8 +51,7 @@ extension LoadImagesPresenterImpl: LoadImagesPresenter {
 
     func updateImages() {
         self.view?.showLoadingView()
-        self.model.getImages { [weak self] images in
-            self?.images = images
+        self.model.getImages(fromBegining: true) { [weak self] images in
             self?.view?.reloadData()
             self?.view?.hideLoadingView()
         }
@@ -69,7 +68,7 @@ extension LoadImagesPresenterImpl: LoadImagesPresenter {
     }
 
     func handleCellTap(at indexPath: IndexPath) {
-        let image = self.model.imageForIndexPath(indexPath)
+        let image = self.model.images[indexPath.row]
         self.coordinator.showPreviewScreen(with: image)
     }
 }

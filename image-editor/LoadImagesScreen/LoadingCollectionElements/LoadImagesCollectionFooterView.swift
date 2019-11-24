@@ -14,7 +14,7 @@ final class LoadImagesCollectionFooterView: UICollectionReusableView {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.loader = UIActivityIndicatorView(style: .large)
+        self.loader = UIActivityIndicatorView()
         self.loader.color = .lightGray
         self.addSubview(self.loader)
         self.loader.snp.makeConstraints { make in
@@ -24,11 +24,6 @@ final class LoadImagesCollectionFooterView: UICollectionReusableView {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        super.prepareForReuse()
-        self.loader.stopAnimating()
     }
 }
 

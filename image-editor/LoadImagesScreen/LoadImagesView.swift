@@ -185,7 +185,7 @@ extension LoadImagesViewImpl: UICollectionViewDelegateFlowLayout {
         return CGSize(width: self.collectionView.bounds.width, height: 30.0)
     }
 
-    func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         self.presenter.nextImagesIfNeeded(for: indexPath.row)
     }
 }

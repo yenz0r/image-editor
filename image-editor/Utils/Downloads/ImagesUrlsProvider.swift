@@ -41,7 +41,10 @@ final class ImagesUrlsProvider {
 
     private var lastUsedIndex = 0
 
-    func getUrls(for number: Int) -> [String] {
+    func getUrls(fromBegining: Bool, for number: Int) -> [String] {
+        if fromBegining {
+            self.lastUsedIndex = 0
+        }
         var result = [String]()
         let first = self.tags[self.lastUsedIndex]
         for (index, value) in self.tags.enumerated() where index != self.lastUsedIndex {

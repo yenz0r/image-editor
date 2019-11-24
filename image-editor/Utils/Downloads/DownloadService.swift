@@ -15,8 +15,8 @@ final class DonwloadService {
 
     private init() { }
 
-    func downloadImages(completion: ((_ images: [UIImage?]) -> Void)?) {
-        let urls = ImagesUrlsProvider.shared.getUrls(for: 21)
+    func downloadImages(fromBegining: Bool, completion: ((_ images: [UIImage?]) -> Void)?) {
+        let urls = ImagesUrlsProvider.shared.getUrls(fromBegining: fromBegining, for: 21)
         let dispatchGroup = DispatchGroup()
         urls.indices.forEach {_ in dispatchGroup.enter() }
         for stringURL in urls {
