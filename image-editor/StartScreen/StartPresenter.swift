@@ -26,6 +26,7 @@ final class StartPresenterImpl {
     }
 }
 
+// MARK: - StartPresenter implementation
 extension StartPresenterImpl: StartPresenter {
     func viewDidLoad() {
         self.view?.setupTitle("Image Editor :D")

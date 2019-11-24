@@ -8,7 +8,7 @@
 
 import CoreImage
 
-class FiltersProvider {
+final class FiltersProvider {
     typealias FiltersType = [String: [FilterKey]?]
 
     struct FilterKey {
@@ -47,9 +47,6 @@ class FiltersProvider {
             "CIColorPosterize" : [
                 self.configureKey("inputLevels", 15.0, 0.0, 6.0)
             ],
-//            "CIWhitePointAdjust" : [
-//                self.configureKey("inputColor", 255.0 / 255.0, 100.0 / 255.0, 255.0 / 255.0)
-//            ],
             "CIComicEffect" : nil,
             "CIPhotoEffectInstant" : nil,
             "CIPhotoEffectProcess" : nil,

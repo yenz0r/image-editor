@@ -118,10 +118,7 @@ extension FiltersPresenterImpl: FiltersPresenter {
     }
 
     func imageAtIndex(_ index: Int) -> UIImage? {
-        guard let image = self.filteredImages[self.filtersNames[index]] else {
-            return nil
-        }
-        return image
+        return self.filteredImages[self.filtersNames[index]] ?? nil
     }
 
     func handleFilterChoose(at indexPath: IndexPath) {
@@ -135,9 +132,9 @@ extension FiltersPresenterImpl: FiltersPresenter {
         DispatchQueue.global(qos: .userInteractive).asyncAfter(deadline: .now() + 2) {
             self.model.applyFilter(for: self.filtersNames[indexPath.row], image: self.image) { [weak self] image in
                 guard let self = self else { return }
+                self.resultImage = image
                 DispatchQueue.main.async {
                     self.view?.setupImage(image)
-                    self.resultImage = image
                     self.router.hideLoadingAlert()
                 }
             }
@@ -145,10 +142,6 @@ extension FiltersPresenterImpl: FiltersPresenter {
     }
 
     func handleNextButtonTap() {
-        if self.resultImage == nil {
-            self.router.showColorsScreen(with: self.image)
-        } else {
-            self.router.showColorsScreen(with: self.resultImage)
-        }
+        self.router.showColorsScreen(with: self.resultImage ?? self.image)
     }
 }

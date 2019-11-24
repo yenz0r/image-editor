@@ -8,7 +8,7 @@
 
 import UIKit
 
-class FiltersCell: UICollectionViewCell {
+final class FiltersCell: UICollectionViewCell {
     private var imageView: UIImageView!
     private var selectedView: UIView!
     private var proStatus: UILabel!

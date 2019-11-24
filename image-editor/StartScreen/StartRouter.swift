@@ -28,6 +28,7 @@ final class StartCoordinator: NSObject {
     }
 }
 
+// MARK: - StartRouter implemnetation
 extension StartCoordinator: StartRouter {
     func start() {
         guard let view = view else { return }

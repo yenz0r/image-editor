@@ -36,6 +36,7 @@ final class LoadImagesCell: UICollectionViewCell {
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(5.0)
         }
+        imageView.contentMode = .scaleAspectFill
         imageView.layer.cornerRadius = 10.0
         imageView.layer.borderColor = UIColor.black.cgColor
         imageView.layer.borderWidth = 1.0

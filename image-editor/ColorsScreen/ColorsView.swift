@@ -122,7 +122,11 @@ extension ColorsViewImpl: ColorsView {
     }
 
     func startLoadAnimation() {
-        let alertController = UIAlertController(title: "Loading..", message: "Filter is in progress..", preferredStyle: .alert)
+        let alertController = UIAlertController(
+            title: "Loading..",
+            message: "Filter is in progress..",
+            preferredStyle: .alert
+        )
         self.present(alertController, animated: true, completion: nil)
     }
 
