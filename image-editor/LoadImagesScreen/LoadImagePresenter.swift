@@ -63,7 +63,9 @@ extension LoadImagesPresenterImpl: LoadImagesPresenter {
 
     func handleLoadButtonTap(with link: String?) {
         self.model.imageForURL(link) { [weak self] image in
-            self?.coordinator.showPreviewScreen(with: image)
+            DispatchQueue.main.async {
+                self?.coordinator.showPreviewScreen(with: image)
+            }
         }
     }
 

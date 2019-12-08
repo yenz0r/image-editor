@@ -29,17 +29,15 @@ final class FiltersService {
         self.filtersProvider.updateFilterCurrentValue(for: name, by: key, on: value)
     }
 
-    private let emptyImage = UIImage(named: "empty-image")
-
     func applyFilter(for name: String, image: UIImage?) -> UIImage? {
         let context = CIContext(options: nil)
 
         guard let startImage = image, let ciImage = CIImage(image: startImage)  else {
-            return self.emptyImage
+            return nil
         }
 
         guard let currentFilter = CIFilter(name: name) else {
-            return self.emptyImage
+            return nil
         }
 
         currentFilter.setValue(ciImage, forKey: kCIInputImageKey)
@@ -47,7 +45,7 @@ final class FiltersService {
         filtersProvider.filters[name]??.forEach { currentFilter.setValue($0.initialValue, forKey: $0.name) }
 
         guard let output = currentFilter.outputImage, let cgimg = context.createCGImage(output, from: output.extent) else {
-            return self.emptyImage
+            return nil
         }
 
         return UIImage(cgImage: cgimg, scale: 1.0, orientation: UIImage.Orientation.right)

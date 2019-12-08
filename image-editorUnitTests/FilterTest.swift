@@ -29,7 +29,7 @@ class FiltersProviderMock_2: FiltersProviderable {
     var filters: [String : [FilterKey]?] {
         let filters = self.getFiltersFromFile()
         var result: [String : [FilterKey]?] = [:]
-        filters.forEach { result[$0] = nil }
+        filters.forEach { result[$0] = [] }
         return result
     }
 

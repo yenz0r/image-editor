@@ -38,6 +38,7 @@ final class FiltersPresenterImpl {
 
     private let filtersNames: [String]
     private var selectedIndexPath: IndexPath? = IndexPath(row: 0, section: 0)
+    private let emptyImage = UIImage(named: "empty-image")
 
     init(model: FiltersModel,
          view: FiltersView,
@@ -95,7 +96,7 @@ extension FiltersPresenterImpl: FiltersPresenter {
         self.router.showLoadingAlert()
         self.model.applyFilter(for: self.filterToUpdate, image: self.image) { [weak self] image in
             DispatchQueue.main.async {
-                self?.view?.setupImage(image)
+                self?.view?.setupImage(image ?? self?.emptyImage)
                 self?.resultImage = image
                 self?.router.hideLoadingAlert()
             }

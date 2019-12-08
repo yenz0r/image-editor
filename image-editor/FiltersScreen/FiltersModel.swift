@@ -17,7 +17,7 @@ protocol FiltersModel: AnyObject {
 
 final class FiltersModelImpl {
     private let filtersService: FiltersService
-
+    
     init() {
         self.filtersService = FiltersService()
     }
