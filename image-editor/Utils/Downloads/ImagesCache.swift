@@ -22,4 +22,8 @@ final class ImagesCache {
     func getImage(for url: String) -> UIImage? {
         return self.cache.object(forKey: url as NSString)
     }
+
+    func clearCache() {
+        self.cache.removeAllObjects()
+    }
 }

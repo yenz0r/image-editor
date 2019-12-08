@@ -10,7 +10,16 @@ import UIKit
 import CoreImage
 
 final class FiltersService {
-    private let filtersProvider = FiltersProvider()
+    private var filtersProvider: FiltersProviderable
+
+    init() {
+        filtersProvider = FiltersProvider()
+    }
+
+    //testable init
+    init(filtersProvider: FiltersProviderable) {
+        self.filtersProvider = filtersProvider
+    }
 
     var filters: FiltersProvider.FiltersType {
         return filtersProvider.filters

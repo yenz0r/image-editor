@@ -8,16 +8,21 @@
 
 import CoreImage
 
-final class FiltersProvider {
-    typealias FiltersType = [String: [FilterKey]?]
+struct FilterKey {
+    let name: String
+    let minimumValue: Float
+    let maximumValue: Float
+    let initialValue: Float
+    var currentValue: Float = 0.0
+}
 
-    struct FilterKey {
-        let name: String
-        let minimumValue: Float
-        let maximumValue: Float
-        let initialValue: Float
-        var currentValue: Float = 0.0
-    }
+protocol FiltersProviderable {
+    var filters: [String: [FilterKey]?] { get }
+    func updateFilterCurrentValue(for name: String, by key: String, on value: Float)
+}
+
+final class FiltersProvider: FiltersProviderable {
+    typealias FiltersType = [String: [FilterKey]?]
 
     var filters: [String: [FilterKey]?] {
         return self.getFilters()
