@@ -52,6 +52,7 @@
 		B9B171F52358F8950043B9BA /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F42358F8950043B9BA /* StartView.swift */; };
 		B9B171F72358FBDE0043B9BA /* StartPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9B171F62358FBDE0043B9BA /* StartPresenter.swift */; };
 		B9E1CA3F23872EDF00AB2E76 /* ImagesCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9E1CA3E23872EDF00AB2E76 /* ImagesCache.swift */; };
+		B9F869A723A371FD00A17F91 /* TestServerPerfomance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9F869A623A371FD00A17F91 /* TestServerPerfomance.swift */; };
 		FE2F136E2369802F00C4C27D /* FiltersService.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE2F136D2369802F00C4C27D /* FiltersService.swift */; };
 /* End PBXBuildFile section */
 
@@ -125,6 +126,7 @@
 		B9B171F42358F8950043B9BA /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
 		B9B171F62358FBDE0043B9BA /* StartPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartPresenter.swift; sourceTree = "<group>"; };
 		B9E1CA3E23872EDF00AB2E76 /* ImagesCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesCache.swift; sourceTree = "<group>"; };
+		B9F869A623A371FD00A17F91 /* TestServerPerfomance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestServerPerfomance.swift; sourceTree = "<group>"; };
 		BD7732CD85075B25F8BFBDFD /* Pods-image-editor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-image-editor.debug.xcconfig"; path = "Target Support Files/Pods-image-editor/Pods-image-editor.debug.xcconfig"; sourceTree = "<group>"; };
 		FE2F136D2369802F00C4C27D /* FiltersService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FiltersService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,6 +218,7 @@
 				B958EACB239D3CA400D5BC5D /* ImagesCacheTest.swift */,
 				B958EACD239D41A300D5BC5D /* ColorServiceTest.swift */,
 				B958EACF239D446F00D5BC5D /* FilterTest.swift */,
+				B9F869A623A371FD00A17F91 /* TestServerPerfomance.swift */,
 				B958EAB7239D2D1E00D5BC5D /* Info.plist */,
 			);
 			path = "image-editorUnitTests";
@@ -534,6 +537,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9F869A723A371FD00A17F91 /* TestServerPerfomance.swift in Sources */,
 				B958EACC239D3CA400D5BC5D /* ImagesCacheTest.swift in Sources */,
 				B958EACE239D41A300D5BC5D /* ColorServiceTest.swift in Sources */,
 				B958EAD0239D446F00D5BC5D /* FilterTest.swift in Sources */,
@@ -625,9 +629,9 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				INFOPLIST_FILE = "image-editorUnitTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -646,9 +650,9 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				INFOPLIST_FILE = "image-editorUnitTests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -666,9 +670,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				INFOPLIST_FILE = "image-editorUITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -686,9 +690,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				INFOPLIST_FILE = "image-editorUITests/Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -823,7 +827,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"image-editor/Preview Content\"";
-				DEVELOPMENT_TEAM = 2M685ZG33N;
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "image-editor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -831,7 +835,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "yenz0redd.image-editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yenz0redd.image-editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -843,9 +847,10 @@
 			baseConfigurationReference = 778A5FA8770B359FA9AC9C41 /* Pods-image-editor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"image-editor/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = F69M5SBR3W;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = "image-editor/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -853,7 +858,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "yenz0redd.image-editor";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.yenz0redd.image-editor";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;

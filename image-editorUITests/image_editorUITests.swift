@@ -49,4 +49,31 @@ class image_editorUITests: XCTestCase {
         app.sliders["50%"].swipeRight()
     }
 
+    func testSaveAction() {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Network"].tap()
+        sleep(10)
+        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.tap()
+        app.buttons["Colors"].tap()
+        app.navigationBars["Colors Screen"].buttons["Next"].tap()
+        app.buttons["SAVE"].tap()
+        app.alerts["Saved!"].scrollViews.otherElements.buttons["Ok"].tap()
+        app.buttons["EXIT"].tap()
+    }
+
+    func testScrollResult() {
+        let app = XCUIApplication()
+        app.launch()
+        app.buttons["Network"].tap()
+        sleep(10)
+        app.collectionViews.children(matching: .cell).element(boundBy: 0).children(matching: .other).element.tap()
+        app.buttons["Colors"].tap()
+        app.navigationBars["Colors Screen"].buttons["Next"].tap()
+
+        let element = app.scrollViews.children(matching: .other).element(boundBy: 0)
+        element.swipeLeft()
+        element.swipeRight()
+        app.buttons["EXIT"].tap()
+    }
 }
